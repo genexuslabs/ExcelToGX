@@ -19,7 +19,7 @@ You need to configure the ExcelToBC.exe.config file with the values for:
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ExcelToBC.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="`**`TransactionNameRow`**`" Type="System.Int32" Scope="Application">
+    <Setting Name="```**TransactionNameRow**```" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">3</Value>
     </Setting>
     <Setting Name="TransactionNameCol" Type="System.Int32" Scope="Application">
