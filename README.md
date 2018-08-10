@@ -2,6 +2,14 @@
 
 Command Line utility to allow declaring a GeneXus Transaction in an Excel file and converting it to a GeneXus export file.
 
+## Sample Execution
+
+```
+ExcelToBC.exe /x:Test.xlsx /o:MyExport.xml
+```
+
+## Configuration
+
 A key aspect to make it work is the configuration where you specify the locations of certain key cells in the Excel file.
 
 You need to configure the ExcelToBC.exe.config file with the values for:
@@ -12,7 +20,7 @@ You need to configure the ExcelToBC.exe.config file with the values for:
 
 - Specify the column for Attribute Name, Attribute Description, Attribute Data Type, Attribute Length (length is specified as ```<length>[,<decimals>]``` )
 
-## Sample Configuration File
+### Sample Configuration File
 
 ```
 <?xml version='1.0' encoding='utf-8'?>
@@ -59,7 +67,7 @@ You need to configure the ExcelToBC.exe.config file with the values for:
 </SettingsFile>
 ```
 
-## Command Line Tool
+## Command Line Tool Specification
 
 The ExcelToBC is a command line tool with the following specification
 
@@ -77,8 +85,4 @@ Usage: ExcelToBC.exe [@argfile] /ExcelFile|x:<value> [/OutputFile|o:<value>]
 /version             Show version.
 ```
 
-## Sample Execution
 
-```
-ExcelToBC.exe /x:Test.xlsx /o:MyExport.xml
-```
