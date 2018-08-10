@@ -1,19 +1,34 @@
 # ExcelToBC
-Utility to create a Genexus BC from an excel file
+
+Command Line utility to allow declaring a GeneXus Transaction in an Excel file and converting it to a GeneXus export file.
+
+You can use just the binary located on the Bin directory of this repository. 
+
+## Sample Execution
+
+```
+ExcelToBC.exe /x:Test.xlsx /o:MyExport.xml
+```
 
 
+## Configuration
 
-This utility allow to convert an excel file where a Transaction is described in an XML file.
+A key aspect to make it work is the configuration where you specify the locations of certain key cells in the Excel file.
 
-In order to works correctly you need to configure the ExcelToBC.config file with the values for:
+You need to configure the ExcelToBC.exe.config file with the values for:
 
-- Row and Column for the TransactionName, Column for the Transaction Description (row is assumed the same)
+- Row and Column for the TransactionName, Column for the Transaction Description (row is assumed the same as the Transaction Name)
 
 - Row and Column of the start where the the collection of attributes are specified. 
 
 - Specify the column for Attribute Name, Attribute Description, Attribute Data Type, Attribute Length (length is specified as ```<length>[,<decimals>]``` )
+- The name of the Sheet where the Transaction is declared.
 
-## Sample Configuration File
+### Sample Configuration File
+
+For a Excel like the following:
+
+![Image of Sample](https://github.com/genexuslabs/sample.png)
 
 ```
 <?xml version='1.0' encoding='utf-8'?>
@@ -60,7 +75,8 @@ In order to works correctly you need to configure the ExcelToBC.config file with
 </SettingsFile>
 ```
 
-## Command Line Tool
+## Command Line Tool Specification
+
 The ExcelToBC is a command line tool with the following specification
 
 ```
@@ -76,3 +92,5 @@ Usage: ExcelToBC.exe [@argfile] /ExcelFile|x:<value> [/OutputFile|o:<value>]
 /help                Show usage.
 /version             Show version.
 ```
+
+
