@@ -1,11 +1,10 @@
 # ExcelToBC
-Utility to create a Genexus BC from an excel file
 
+Command Line utility to allow declaring a GeneXus Transaction in an Excel file and converting it to a GeneXus export file.
 
+A key aspect to make it work is the configuration where you specify the locations of certain key cells in the Excel file.
 
-This utility allow to convert an excel file where a Transaction is described in an XML file.
-
-In order to works correctly you need to configure the ExcelToBC.config file with the values for:
+You need to configure the ExcelToBC.exe.config file with the values for:
 
 - Row and Column for the TransactionName, Column for the Transaction Description (row is assumed the same)
 
@@ -20,7 +19,7 @@ In order to works correctly you need to configure the ExcelToBC.config file with
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ExcelToBC.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="TransactionNameRow" Type="System.Int32" Scope="Application">
+    <Setting Name="`**`TransactionNameRow`**`" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">3</Value>
     </Setting>
     <Setting Name="TransactionNameCol" Type="System.Int32" Scope="Application">
