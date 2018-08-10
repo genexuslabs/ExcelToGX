@@ -2,11 +2,14 @@
 
 Command Line utility to allow declaring a GeneXus Transaction in an Excel file and converting it to a GeneXus export file.
 
+You can use just the binary located on the Bin directory of this repository. 
+
 ## Sample Execution
 
 ```
 ExcelToBC.exe /x:Test.xlsx /o:MyExport.xml
 ```
+
 
 ## Configuration
 
