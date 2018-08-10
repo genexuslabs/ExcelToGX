@@ -11,7 +11,7 @@ In order to works correctly you need to configure the ExcelToBC.config file with
 
 - Row and Column of the start where the the collection of attributes are specified. 
 
-- Specify the column for Attribute Name, Attribute Description, Attribute Data Type, Attribute Length (length is specified as <length>[,<decimals>]
+- Specify the column for Attribute Name, Attribute Description, Attribute Data Type, Attribute Length (length is specified as ```<length>[,<decimals>]``` )
 
 Sample Configuration File
 
