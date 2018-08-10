@@ -1,0 +1,53 @@
+﻿group ExportGenerator;
+
+delimiters "$", "$"
+
+g_transaction_render(component) ::=<<
+
+<?xml version="1.0" encoding="utf-8"?>
+<ExportFile>
+  <KMW>
+    <MajorVersion>4</MajorVersion>
+    <MinorVersion>0</MinorVersion>
+    <Build>124546</Build>
+  </KMW>
+  <Objects>
+    <Object guid="$component.Guid$" parentGuid="afa47377-41d5-4ae8-9755-6f53150aa361" user="GeneXus" name="$component.Name$" type="1db606f2-af09-4cf9-a3b5-b481519d28f6" description="$component.Description$">
+      <Part type="264be5fb-1b28-4b25-a598-6ca900dd059f">
+        <Level Name="$component.Name$">
+		  $component.Attributes:{ att | $g_transaction_attribute(att)$ };separator="\n"$
+        </Level>
+        <Properties><Property><Name>IsDefault</Name><Value>False</Value></Property></Properties>
+      </Part>
+      <Part type="4c28dfb9-f83b-46f0-9cf3-f7e090b525d5">
+        <Properties><Property><Name>IsDefault</Name><Value>True</Value></Property><Property><Name>Defaults</Name><Value>gx:TrnDefaultWinForm.dkt</Value></Property></Properties>
+      </Part>
+    </Object>
+  </Objects>
+  <Attributes>
+		  $component.Attributes:{ att | $g_attribute(att)$ };separator="\n"$
+   </Attributes>
+</ExportFile>
+>>
+
+g_transaction_attribute(att) ::=<<
+<Attribute $if (att.IsKey)$ key="True" $endif$ isNullable="$att.AllowNull$">$att.Name$</Attribute>
+>>
+
+g_attribute(att) ::=<<
+<Attribute guid="$att.Guid$" name="$att.Name$" description="$att.Description$">
+      <Properties><Property><Name>Name</Name><Value>$att.Name$</Value></Property><Property><Name>ATTCUSTOMTYPE</Name><Value>$enum_type.(att.Type)$</Value></Property><Property><Name>IsDefault</Name><Value>False</Value></Property>
+	  $if (att.Length)$<Property><Name>Length</Name><Value>$att.Length$</Value></Property>$endif$ $if (att.Decimals)$ <Property><Name>Decimals</Name><Value>$att.Decimals$</Value></Property> $endif$
+	  </Properties>
+</Attribute>
+>>
+
+enum_type ::= [
+	"char" : "Character",
+	"num"  : "Numeric",
+	"date" : "Date",
+	"datetime" : "DateTime",
+	"image" : "Image",
+	"varchar" : "VarChar",
+	"longvarchar" : "LongVarChar"
+]
