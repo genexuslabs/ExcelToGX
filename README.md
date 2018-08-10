@@ -60,6 +60,7 @@ You need to configure the ExcelToBC.exe.config file with the values for:
 ```
 
 ## Command Line Tool
+
 The ExcelToBC is a command line tool with the following specification
 
 ```
@@ -74,4 +75,10 @@ Usage: ExcelToBC.exe [@argfile] /ExcelFile|x:<value> [/OutputFile|o:<value>]
                      is in xml format (Default is "Transaction.xml")
 /help                Show usage.
 /version             Show version.
+```
+
+## Sample Execution
+
+```
+ExcelToBC.exe /x:Test.xlsx /o:MyExport.xml
 ```
