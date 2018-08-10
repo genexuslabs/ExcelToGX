@@ -13,7 +13,7 @@ In order to works correctly you need to configure the ExcelToBC.config file with
 
 - Specify the column for Attribute Name, Attribute Description, Attribute Data Type, Attribute Length (length is specified as ```<length>[,<decimals>]``` )
 
-Sample Configuration File
+## Sample Configuration File
 
 ```
 <?xml version='1.0' encoding='utf-8'?>
@@ -58,4 +58,21 @@ Sample Configuration File
     </Setting>
   </Settings>
 </SettingsFile>
+```
+
+## Command Line Tool
+The ExcelToBC is a command line tool with the following specification
+
+```
+Usage: ExcelToBC.exe [@argfile] /ExcelFile|x:<value> [/OutputFile|o:<value>]
+       [/help|?|h] [/version|v]
+
+
+@argfile             Read arguments from a file.
+/ExcelFile:<value>   Uri of Excel File, could be relative to this exe or
+                     absoulte
+/OutputFile:<value>  The relative or full path to the output file, the output
+                     is in xml format (Default is "Transaction.xml")
+/help                Show usage.
+/version             Show version.
 ```
