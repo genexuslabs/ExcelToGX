@@ -28,7 +28,7 @@ You need to configure the ExcelToBC.exe.config file with the values for:
 
 For a Excel like the following:
 
-![Image of Sample](https://github.com/genexuslabs/sample.png)
+![Image of Sample](https://github.com/genexuslabs/ExcelToBC/blob/master/sample.png)
 
 ```
 <?xml version='1.0' encoding='utf-8'?>
