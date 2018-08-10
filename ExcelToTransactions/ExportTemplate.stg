@@ -38,16 +38,17 @@ g_attribute(att) ::=<<
 <Attribute guid="$att.Guid$" name="$att.Name$" description="$att.Description$">
       <Properties><Property><Name>Name</Name><Value>$att.Name$</Value></Property><Property><Name>ATTCUSTOMTYPE</Name><Value>$enum_type.(att.Type)$</Value></Property><Property><Name>IsDefault</Name><Value>False</Value></Property>
 	  $if (att.Length)$<Property><Name>Length</Name><Value>$att.Length$</Value></Property>$endif$ $if (att.Decimals)$ <Property><Name>Decimals</Name><Value>$att.Decimals$</Value></Property> $endif$
+	  <Property><Name>Description</Name><Value>$att.Description$</Value></Property>
 	  </Properties>
 </Attribute>
 >>
 
 enum_type ::= [
-	"char" : "Character",
-	"num"  : "Numeric",
-	"date" : "Date",
-	"datetime" : "DateTime",
-	"image" : "Image",
-	"varchar" : "VarChar",
+	"char"		: "Character",
+	"num"		: "Numeric",
+	"date"		: "Date",
+	"datetime"	: "DateTime",
+	"image"		: "Image",
+	"varchar"	: "VarChar",
 	"longvarchar" : "LongVarChar"
 ]

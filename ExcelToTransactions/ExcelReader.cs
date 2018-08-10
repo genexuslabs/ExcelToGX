@@ -78,7 +78,7 @@ namespace ExcelToTransactions
 
 		private static TransactionAttribute ReadAttribute(ExcelWorksheet sheet, int row)
 		{
-			if (String.IsNullOrEmpty(sheet.Cells[row, 6].Value?.ToString().Trim()))
+			if (String.IsNullOrEmpty(sheet.Cells[row, Configuration.AttributeNameColumn].Value?.ToString().Trim()))
 				return null;
 			TransactionAttribute att = new TransactionAttribute
 			{

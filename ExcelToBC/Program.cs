@@ -57,8 +57,8 @@ namespace GeneXus.Utilities
 
 	public class ConvertCommandLine : CommandLineParser
 	{
-		[ValueUsage("Uri of Excel File, could be relative to this exe or absoulte", AlternateName1 = "x")]
-		public string ExcelFile = String.Empty;
+		[ValueUsage("Uri of Excel File, could be relative to this exe or absoulte", Optional = false, AlternateName1 = "x")]
+		public string ExcelFile;
 
 		[ValueUsage("The relative or full path to the output file, the output is in xml format",  Optional = true, AlternateName1 = "o")]
 		public string OutputFile = "Transaction.xml";

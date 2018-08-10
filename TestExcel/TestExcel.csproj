@@ -53,7 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="TransactionDefinitionSheet_MovementDetail.xlsx">
+    <None Include="Test.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
