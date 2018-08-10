@@ -44,11 +44,11 @@ g_attribute(att) ::=<<
 >>
 
 enum_type ::= [
-	"char" : "Character",
-	"num"  : "Numeric",
-	"date" : "Date",
-	"datetime" : "DateTime",
-	"image" : "Image",
-	"varchar" : "VarChar",
+	"char"		: "Character",
+	"num"		: "Numeric",
+	"date"		: "Date",
+	"datetime"	: "DateTime",
+	"image"		: "Image",
+	"varchar"	: "VarChar",
 	"longvarchar" : "LongVarChar"
 ]

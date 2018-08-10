@@ -93,7 +93,12 @@ namespace ExcelToTransactions
 			string lenAndDecimals = sheet.Cells[row, Configuration.AttributeDataLengthColumn].Value?.ToString().Trim();
 			if (lenAndDecimals != null)
 			{
-				string[] splitedData = lenAndDecimals.Trim().Split(',');
+				string[] splitedData;
+				if (lenAndDecimals.Contains("."))
+					splitedData = lenAndDecimals.Trim().Split('.');
+				else
+					splitedData = lenAndDecimals.Trim().Split(',');
+
 				att.Decimals = 0;
 				if (splitedData.Length >= 1)
 					att.Length = int.Parse(splitedData[0]);
