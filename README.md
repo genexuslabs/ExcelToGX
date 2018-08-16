@@ -17,7 +17,7 @@ A key aspect to make it work is the configuration where you specify the location
 
 You need to configure the ExcelToBC.exe.config file with the values for:
 
-- Row and Column for the TransactionName, Column for the Transaction Description (row is assumed the same as the Transaction Name)
+- Row and Column for the TransactionName, Row and Column for the Transaction Description
 
 - Row and Column of the start where the the collection of attributes are specified. 
 
@@ -45,6 +45,9 @@ The Configuration File should be>
     </Setting>
     <Setting Name="TransactionDescCol" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">1</Value>
+    </Setting>
+     <Setting Name="TransactionDescRow" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="AttributeStartRow" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">5</Value>
