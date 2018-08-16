@@ -130,5 +130,14 @@ namespace ExcelToBC.Properties {
                 return ((string)(this["TransactionDefinitionSheetName"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public int TransactionDescRow {
+            get {
+                return ((int)(this["TransactionDescRow"]));
+            }
+        }
     }
 }

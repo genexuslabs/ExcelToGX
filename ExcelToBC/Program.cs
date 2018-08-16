@@ -42,6 +42,7 @@ namespace GeneXus.Utilities
 			Configuration.TransactionNameRow = Settings.Default.TransactionNameRow;
 			Configuration.TransactionNameCol = Settings.Default.TransactionNameCol;
 			Configuration.TransactionDescColumn = Settings.Default.TransactionDescCol;
+			Configuration.TransactionDescRow = Settings.Default.TransactionDescRow;
 
 			Configuration.AttributeStartRow = Settings.Default.AttributeStartRow;
 			Configuration.AttributesStartColumn = Settings.Default.AttributeStartColumn;

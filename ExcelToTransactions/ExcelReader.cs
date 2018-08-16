@@ -18,6 +18,7 @@ namespace ExcelToTransactions
 			public static int TransactionNameRow = 3;
 			public static int TransactionNameCol = 7;
 			public static int TransactionDescColumn = 11;
+			public static int TransactionDescRow = 3;
 
 			public static int AttributeStartRow = 7;
 			public static int AttributesStartColumn = 2;
@@ -41,7 +42,7 @@ namespace ExcelToTransactions
 			string trnName = sheet.Cells[Configuration.TransactionNameRow, Configuration.TransactionNameCol].Value?.ToString();
 			if (trnName == null)
 				throw new Exception($"Could not find the Transaction name at [{Configuration.TransactionNameRow} , {Configuration.TransactionNameCol}], please take a look at the configuration file ");
-			string trnDescription = sheet.Cells[Configuration.TransactionNameRow, Configuration.TransactionDescColumn].Value?.ToString();
+			string trnDescription = sheet.Cells[Configuration.TransactionDescRow, Configuration.TransactionDescColumn].Value?.ToString();
 			TransactionLevel level = new TransactionLevel
 			{
 				Name = trnName,

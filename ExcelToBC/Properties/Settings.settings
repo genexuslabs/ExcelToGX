@@ -38,5 +38,8 @@
     <Setting Name="TransactionDefinitionSheetName" Type="System.String" Scope="Application">
       <Value Profile="(Default)">TransactionDefinitionSheet</Value>
     </Setting>
+    <Setting Name="TransactionDescRow" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
