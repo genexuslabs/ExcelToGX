@@ -16,6 +16,7 @@ namespace TestExcel
 			Configuration.TransactionNameRow = 2;
 			Configuration.TransactionNameCol = 1;
 			Configuration.TransactionDescColumn = 2;
+			Configuration.TransactionDescRow = 2;
 
 			Configuration.AttributeStartRow = 5;
 			Configuration.AttributesStartColumn = 1;
