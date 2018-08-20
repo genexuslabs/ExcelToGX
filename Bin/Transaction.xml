@@ -8,33 +8,44 @@
   <Objects>
     <Object guid="572a12f5-0672-53c7-9060-993b59cf6526" parentGuid="afa47377-41d5-4ae8-9755-6f53150aa361" user="GeneXus" name="MovementDetail" type="1db606f2-af09-4cf9-a3b5-b481519d28f6" description="移動明細">
       <Part type="264be5fb-1b28-4b25-a598-6ca900dd059f">
-        <Level Name="MovementDetail">
-		  <Attribute  key="True"  isNullable="false">MovementDetail_DealDate</Attribute> 
-		  <Attribute  key="True"  isNullable="false">MovementDetail_ReceiveNumber</Attribute> 
-		  <Attribute  key="True"  isNullable="false">MovementDetail_MovementDetailNumber</Attribute> 
-		  <Attribute  isNullable="false">MovementDetail_CorrespondentCd</Attribute> 
-		  <Attribute  isNullable="false">MovementDetail_CorrespondentSubjectCd</Attribute> 
-		  <Attribute  isNullable="false">MovementDetail_CurrencyCd</Attribute> 
-		  <Attribute  isNullable="false">MovementDetail_DepositPaymentCtgy</Attribute> 
-		  <Attribute  isNullable="false">MovementDetail_DealAmount</Attribute> 
-		  <Attribute  isNullable="false">MovementDetail_ValueDate</Attribute> 
-		  <Attribute  isNullable="false">MovementDetail_DealSignCd</Attribute> 
-		  <Attribute  isNullable="false">MovementDetail_DealNumber</Attribute> 
-		  <Attribute  isNullable="false">MovementDetail_DestinationBankDealNumber</Attribute> 
-		  <Attribute  isNullable="false">MovementDetail_AssociatedSystemDealNumber</Attribute> 
-		  <Attribute  isNullable="false">MovementDetail_ChargeDealNumber</Attribute> 
-		  <Attribute  isNullable="false">MovementDetail_UpdateAfterBalance</Attribute> 
-		  <Attribute  isNullable="false">MovementDetail_DealTime</Attribute> 
-		  <Attribute  isNullable="false">MovementDetail_OtoNumber</Attribute> 
-		  <Attribute  isNullable="false">MovementDetail_MACSInterlockingNecessityFlg</Attribute> 
-		  <Attribute  isNullable="false">MovementDetail_JournalNumber</Attribute> 
-		  <Attribute  isNullable="false">MovementDetail_CancelCd</Attribute> 
-		  <Attribute  isNullable="false">MovementDetail_AccountSubjectCd</Attribute> 
-		  <Attribute  isNullable="false">MovementDetail_CountryCd</Attribute> 
-		  <Attribute  isNullable="false">MovementDetail_PaymentCtgy</Attribute> 
-		  <Attribute  isNullable="false">MovementDetail_PaymentDetailCtgy</Attribute> 
-        </Level>
-        <Properties><Property><Name>IsDefault</Name><Value>False</Value></Property></Properties>
+          <Level Name="MovementDetail" Type="MovementDetail" Description="移動明細" Guid="572a12f5-0672-53c7-9060-993b59cf6526">
+        		  <Attribute key="True" >MovementDetail_DealDate</Attribute> 
+        		  <Attribute key="True" >MovementDetail_ReceiveNumber</Attribute> 
+        		  <Attribute key="True" >MovementDetail_MovementDetailNumber</Attribute> 
+        		  <Attribute>MovementDetail_CorrespondentCd</Attribute> 
+        		  <Attribute>MovementDetail_CorrespondentSubjectCd</Attribute> 
+        		  <Attribute>MovementDetail_CurrencyCd</Attribute> 
+        		  <Attribute>MovementDetail_DepositPaymentCtgy</Attribute> 
+        		  <Attribute>MovementDetail_DealAmount</Attribute> 
+        		  <Attribute>MovementDetail_ValueDate</Attribute> 
+        		  <Attribute>MovementDetail_DealSignCd</Attribute> 
+        		  <Attribute>MovementDetail_DealNumber</Attribute> 
+        		  <Attribute>MovementDetail_DestinationBankDealNumber</Attribute> 
+        		  <Attribute>MovementDetail_AssociatedSystemDealNumber</Attribute> 
+        		  <Attribute>MovementDetail_ChargeDealNumber</Attribute> 
+        		  <Attribute>MovementDetail_UpdateAfterBalance</Attribute> 
+        		  <Attribute>MovementDetail_DealTime</Attribute> 
+        		  <Attribute>MovementDetail_OtoNumber</Attribute> 
+        		  <Attribute>MovementDetail_MACSInterlockingNecessityFlg</Attribute> 
+        		  <Attribute>MovementDetail_JournalNumber</Attribute> 
+        		  <Attribute>MovementDetail_CancelCd</Attribute> 
+        		  <Attribute>MovementDetail_AccountSubjectCd</Attribute> 
+        		  <Attribute>MovementDetail_CountryCd</Attribute> 
+        		  <Attribute>MovementDetail_PaymentCtgy</Attribute> 
+        		  <Attribute>MovementDetail_PaymentDetailCtgy</Attribute> 
+        		    <Level Name="TelegramStatement" Type="TelegramStatement" Description="移動明細" Guid="b54442cb-7d18-57ce-89aa-c366a043a471">
+        		  		  <Attribute key="True" >R_MABOJ_MsgDetail_Number</Attribute> 
+        		  		  <Attribute>R_MABOJ_MsgDetail_ItemName</Attribute> 
+        		  		  <Attribute>R_MABOJ_MsgDetail_ItemText</Attribute> 
+        		  		  <Attribute>R_MABOJ_MsgDetail_SequenceCtgy</Attribute> 
+        		  		 </Level> 
+        		    <Level Name="CIAttributes" Type="CIAttributes" Description="移動明細" Guid="3b942c07-25c2-51c8-9f63-6646fb8bad2b">
+        		  		  <Attribute key="True" >R_MABOJ_Citem_SubNumber</Attribute> 
+        		  		  <Attribute>R_MABOJ_Citem_XML_TagName</Attribute> 
+        		  		  <Attribute>R_MABOJ_Citem_Text</Attribute> 
+        		  		 </Level> 
+        		 </Level>
+	    <Properties><Property><Name>IsDefault</Name><Value>False</Value></Property></Properties>
       </Part>
       <Part type="4c28dfb9-f83b-46f0-9cf3-f7e090b525d5">
         <Properties><Property><Name>IsDefault</Name><Value>True</Value></Property><Property><Name>Defaults</Name><Value>gx:TrnDefaultWinForm.dkt</Value></Property></Properties>
@@ -184,6 +195,48 @@
 		        <Properties><Property><Name>Name</Name><Value>MovementDetail_PaymentDetailCtgy</Value></Property><Property><Name>ATTCUSTOMTYPE</Name><Value>Character</Value></Property><Property><Name>IsDefault</Name><Value>False</Value></Property>
 		  	  <Property><Name>Length</Name><Value>2</Value></Property>  <Property><Name>Decimals</Name><Value>0</Value></Property> 
 		  	  <Property><Name>Description</Name><Value>支払詳細区分</Value></Property>
+		  	  </Properties>
+		  </Attribute> 
+		  <Attribute guid="9c63ef37-a953-51a7-9217-1628726d4bf8" name="R_MABOJ_MsgDetail_Number" description="通番">
+		        <Properties><Property><Name>Name</Name><Value>R_MABOJ_MsgDetail_Number</Value></Property><Property><Name>ATTCUSTOMTYPE</Name><Value>Numeric</Value></Property><Property><Name>IsDefault</Name><Value>False</Value></Property>
+		  	  <Property><Name>Length</Name><Value>4</Value></Property>  <Property><Name>Decimals</Name><Value>0</Value></Property> 
+		  	  <Property><Name>Description</Name><Value>通番</Value></Property>
+		  	  </Properties>
+		  </Attribute> 
+		  <Attribute guid="2c76ce32-3e97-5fba-bfa8-7f1a3b9e0220" name="R_MABOJ_MsgDetail_ItemName" description="項目名称">
+		        <Properties><Property><Name>Name</Name><Value>R_MABOJ_MsgDetail_ItemName</Value></Property><Property><Name>ATTCUSTOMTYPE</Name><Value>VarChar</Value></Property><Property><Name>IsDefault</Name><Value>False</Value></Property>
+		  	  <Property><Name>Length</Name><Value>300</Value></Property>  <Property><Name>Decimals</Name><Value>0</Value></Property> 
+		  	  <Property><Name>Description</Name><Value>項目名称</Value></Property>
+		  	  </Properties>
+		  </Attribute> 
+		  <Attribute guid="4368a513-6d88-578a-85da-f941b61f7389" name="R_MABOJ_MsgDetail_ItemText" description="項目テキスト">
+		        <Properties><Property><Name>Name</Name><Value>R_MABOJ_MsgDetail_ItemText</Value></Property><Property><Name>ATTCUSTOMTYPE</Name><Value>VarChar</Value></Property><Property><Name>IsDefault</Name><Value>False</Value></Property>
+		  	  <Property><Name>Length</Name><Value>10000</Value></Property>  <Property><Name>Decimals</Name><Value>0</Value></Property> 
+		  	  <Property><Name>Description</Name><Value>項目テキスト</Value></Property>
+		  	  </Properties>
+		  </Attribute> 
+		  <Attribute guid="6cfe6032-c91f-597d-b5bf-2fe8cbe9a7c3" name="R_MABOJ_MsgDetail_SequenceCtgy" description="シーケンス区分">
+		        <Properties><Property><Name>Name</Name><Value>R_MABOJ_MsgDetail_SequenceCtgy</Value></Property><Property><Name>ATTCUSTOMTYPE</Name><Value>VarChar</Value></Property><Property><Name>IsDefault</Name><Value>False</Value></Property>
+		  	  <Property><Name>Length</Name><Value>1</Value></Property>  <Property><Name>Decimals</Name><Value>0</Value></Property> 
+		  	  <Property><Name>Description</Name><Value>シーケンス区分</Value></Property>
+		  	  </Properties>
+		  </Attribute> 
+		  <Attribute guid="d8741372-6328-51ff-abe7-41b088f3b714" name="R_MABOJ_Citem_SubNumber" description="C項目_枝番">
+		        <Properties><Property><Name>Name</Name><Value>R_MABOJ_Citem_SubNumber</Value></Property><Property><Name>ATTCUSTOMTYPE</Name><Value>Numeric</Value></Property><Property><Name>IsDefault</Name><Value>False</Value></Property>
+		  	  <Property><Name>Length</Name><Value>4</Value></Property>  <Property><Name>Decimals</Name><Value>0</Value></Property> 
+		  	  <Property><Name>Description</Name><Value>C項目_枝番</Value></Property>
+		  	  </Properties>
+		  </Attribute> 
+		  <Attribute guid="5543e9de-f059-55ff-ad2a-669269e91f98" name="R_MABOJ_Citem_XML_TagName" description="C項目_XML_TAG名称（※）">
+		        <Properties><Property><Name>Name</Name><Value>R_MABOJ_Citem_XML_TagName</Value></Property><Property><Name>ATTCUSTOMTYPE</Name><Value>VarChar</Value></Property><Property><Name>IsDefault</Name><Value>False</Value></Property>
+		  	  <Property><Name>Length</Name><Value>300</Value></Property>  <Property><Name>Decimals</Name><Value>0</Value></Property> 
+		  	  <Property><Name>Description</Name><Value>C項目_XML_TAG名称（※）</Value></Property>
+		  	  </Properties>
+		  </Attribute> 
+		  <Attribute guid="fc3669ae-a903-57e3-bae5-e01a734e75c8" name="R_MABOJ_Citem_Text" description="C項目_TEXT（※）">
+		        <Properties><Property><Name>Name</Name><Value>R_MABOJ_Citem_Text</Value></Property><Property><Name>ATTCUSTOMTYPE</Name><Value>VarChar</Value></Property><Property><Name>IsDefault</Name><Value>False</Value></Property>
+		  	  <Property><Name>Length</Name><Value>2500</Value></Property>  <Property><Name>Decimals</Name><Value>0</Value></Property> 
+		  	  <Property><Name>Description</Name><Value>C項目_TEXT（※）</Value></Property>
 		  	  </Properties>
 		  </Attribute> 
    </Attributes>

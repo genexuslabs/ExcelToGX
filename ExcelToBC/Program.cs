@@ -53,6 +53,10 @@ namespace GeneXus.Utilities
 			Configuration.AttributeKeyColumn = Settings.Default.AttributeKeyColumn;
 			Configuration.AttributeNullableColumn = Settings.Default.AttributeNullableColumn;
 			Configuration.TransactionDefinitionSheetName = Settings.Default.TransactionDefinitionSheetName;
+			Configuration.LevelCheckColumn = Settings.Default.LevelCheckColumn;
+			Configuration.LevelIdColumn = Settings.Default.LevelIdColumn;
+			Configuration.LevelIdentifierKeyword = Settings.Default.LevelIdentifierKeyword;
+			Configuration.LevelParentIdColumn = Settings.Default.LevelParentIdColumn;
 		}
 	}
 

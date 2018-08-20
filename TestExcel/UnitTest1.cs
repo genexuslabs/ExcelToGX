@@ -17,6 +17,10 @@ namespace TestExcel
 			Configuration.TransactionNameCol = 1;
 			Configuration.TransactionDescColumn = 2;
 			Configuration.TransactionDescRow = 2;
+			Configuration.LevelCheckColumn = 3;
+			Configuration.LevelIdentifierKeyword = "LVL";
+			Configuration.LevelParentIdColumn = 5;
+			Configuration.LevelIdColumn = 4;
 
 			Configuration.AttributeStartRow = 5;
 			Configuration.AttributesStartColumn = 1;

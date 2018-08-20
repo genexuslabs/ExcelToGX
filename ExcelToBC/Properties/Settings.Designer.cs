@@ -124,7 +124,7 @@ namespace ExcelToBC.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("TransactionDefinitionSheet")]
+        [global::System.Configuration.DefaultSettingValueAttribute("てすと")]
         public string TransactionDefinitionSheetName {
             get {
                 return ((string)(this["TransactionDefinitionSheetName"]));
@@ -137,6 +137,42 @@ namespace ExcelToBC.Properties {
         public int TransactionDescRow {
             get {
                 return ((int)(this["TransactionDescRow"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public int LevelCheckColumn {
+            get {
+                return ((int)(this["LevelCheckColumn"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int LevelIdColumn {
+            get {
+                return ((int)(this["LevelIdColumn"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("7")]
+        public int LevelParentIdColumn {
+            get {
+                return ((int)(this["LevelParentIdColumn"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(" レベル1")]
+        public string LevelIdentifierKeyword {
+            get {
+                return ((string)(this["LevelIdentifierKeyword"]));
             }
         }
     }
