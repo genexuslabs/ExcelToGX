@@ -106,13 +106,13 @@ The Configuration File should be>
             </setting>
         </ExcelToBC.Properties.Settings>
     </applicationSettings>
-</configuration>```
-
+</configuration>
+```
 ## Command Line Tool Specification
 
 The ExcelToBC is a command line tool with the following specification
 
-```
+
 Usage: ExcelToBC.exe [@argfile] /ExcelFile|x:<value> [/OutputFile|o:<value>]
        [/help|?|h] [/version|v]
 
