@@ -40,6 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataTypes\AttType.cs" />
+    <Compile Include="DataTypes\BasicDataTypeInfo.cs" />
+    <Compile Include="DataTypes\DataTypeManager.cs" />
+    <Compile Include="DataTypes\DBType.cs" />
+    <Compile Include="DataTypes\GxFormat.cs" />
     <Compile Include="ExcelReader.cs" />
     <Compile Include="GuidHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

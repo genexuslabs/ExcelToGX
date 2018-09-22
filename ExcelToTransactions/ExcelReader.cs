@@ -1,5 +1,6 @@
 ﻿using Antlr4.StringTemplate;
 using Artech.Common.Helpers.Guids;
+using ExcelToTransactions.DataTypes;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
@@ -17,8 +18,8 @@ namespace ExcelToTransactions
 		public class Configuration
 		{
 			public static int LevelCheckColumn = 3;
-			public static int LevelIdColumn = 4;
-			public static int LevelParentIdColumn = 5;
+			public static int LevelIdColumn = 8;
+			public static int LevelParentIdColumn = 9;
 			public static string LevelIdentifierKeyword = "LVL";
 			public static int TransactionNameRow = 3;
 			public static int TransactionNameCol = 7;
@@ -27,6 +28,7 @@ namespace ExcelToTransactions
 			public static int AttributeStartRow = 7;
 			public static int AttributesStartColumn = 2;
 			public static int AttributeNameColumn = 7;
+			public static int AttributeDomainColumn = 9;
 			public static int AttributeDescriptionColumn = 6;
 			public static int AttributeNullableColumn = 4;
 			public static int AttributeKeyColumn = 3;
@@ -34,8 +36,53 @@ namespace ExcelToTransactions
 			public static int AttributeDataLengthColumn = 9;
 			public static string TransactionDefinitionSheetName = "TransactionDefinitionSheet";
 			public static int AttributeAutonumberColumn = 12;
+			public static string PKValue = "PK";
+			public static string NullableValue = "〇";
 		}
-		public static void ReadExcel(string fileName, string outputFile)
+		public static void ReadExcel(string[] files, string outputFile, bool continueOnErrors)
+		{
+			Dictionary<string, TransactionLevel> transactions = new Dictionary<string, TransactionLevel>();
+			Dictionary<string, TransactionAttribute> attributes = new Dictionary<string, TransactionAttribute>();
+			Dictionary<string, TransactionAttribute> domains = new Dictionary<string, TransactionAttribute>();
+
+			foreach (string fileName in files)
+			{
+				try
+				{
+					ProcessFile(fileName, transactions, attributes, domains, continueOnErrors);
+				}
+				catch (Exception ex)
+				{
+					HandleException(fileName, ex, continueOnErrors);
+				}
+			}
+			Console.WriteLine($"Generating Export xml to {outputFile}");
+			TemplateGroup grp = new TemplateGroupString(File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "ExportTemplate.stg")));
+			Template component_tpl = grp.GetInstanceOf("g_transaction_render");
+			component_tpl.Add("components", transactions.Values);
+			component_tpl.Add("attributes", attributes.Values);
+			if (domains.Values != null)
+				component_tpl.Add("domains", domains.Values);
+			string xmlExport = component_tpl.Render();
+			File.WriteAllText(outputFile, xmlExport);
+			Console.WriteLine($"Success");
+		}
+
+		private static void HandleException(string fileName, Exception ex, bool continueOnErrors)
+		{
+			if (!continueOnErrors)
+			{
+				Console.WriteLine($"Error: processing {fileName}, stop processing because continueOnErrors = false");
+				throw ex;
+			}
+			else
+			{
+				Console.WriteLine($"Error: processing {fileName}, continue because continueOnErrors = true");
+				Console.WriteLine(ex.Message);
+			}
+		}
+
+		private static void ProcessFile(string fileName, Dictionary<string, TransactionLevel> transactions, Dictionary<string, TransactionAttribute> attributes, Dictionary<string, TransactionAttribute> domains, bool continueOnError)
 		{
 			Dictionary<int, TransactionLevel> levels = new Dictionary<int, TransactionLevel>();
 			var excel = new ExcelPackage(new System.IO.FileInfo(fileName));
@@ -47,7 +94,6 @@ namespace ExcelToTransactions
 			if (trnName == null)
 				throw new Exception($"Could not find the Transaction name at [{Configuration.TransactionNameRow} , {Configuration.TransactionNameCol}], please take a look at the configuration file ");
 			string trnDescription = sheet.Cells[Configuration.TransactionDescRow, Configuration.TransactionDescColumn].Value?.ToString();
-			List<TransactionAttribute> attributes = new List<TransactionAttribute>();
 			TransactionLevel level = new TransactionLevel
 			{
 				Name = trnName,
@@ -56,39 +102,54 @@ namespace ExcelToTransactions
 			};
 			levels[0] = level;
 			Console.WriteLine($"Processing Transaction {trnName} with Description {trnDescription}");
+			transactions[trnName] = level;
 
 			int row = Configuration.AttributeStartRow;
+			int atts = 0;
 			while (sheet.Cells[row, Configuration.AttributesStartColumn].Value != null)
 			{
-				level = ReadLevel(row, sheet, level, levels, out bool  isLevel);
+				level = ReadLevel(row, sheet, level, levels, out bool isLevel);
 				if (!isLevel)
 				{
-					TransactionAttribute att = ReadAttribute(sheet, row);
-					if (att != null)
+					try
 					{
-						attributes.Add(att);
-						level.Attributes.Add(att);
-						Console.WriteLine($"Processing Attribute {att.Name}");
-						row++;
+						TransactionAttribute att = ReadAttribute(sheet, row);
+						if (att.Domain != null && att.Type != null && !domains.ContainsKey(att.Domain))
+						{
+							TransactionAttribute domain = new TransactionAttribute
+							{
+								Name = att.Domain,
+								Guid = GuidHelper.Create(GuidHelper.UrlNamespace, att.Domain, false).ToString()
+							};
+							DataTypeManager.SetDataType(att.Type, domain);
+							domains[domain.Name.ToLower()] = domain;
+						}
+						if (att != null)
+						{
+							if (attributes.ContainsKey(att.Name) && att.ToString() != attributes[att.Name].ToString())
+								Console.WriteLine($"{att.Name} was already defined with a different data type {attributes[att.Name].ToString()}, taking into account the last one {att.ToString()}");
+							attributes[att.Name] = att;
+							atts++;
+							level.Items.Add(att);
+							Console.WriteLine($"Processing Attribute {att.Name}");
+							row++;
+						}
+						else
+							break;
 					}
-					else
-						break;
+					catch (Exception ex)
+					{
+						HandleException(fileName + $" at row:{row}", ex, continueOnError);
+					}
 				}
 				else
 					row++;
 			}
-			if (level.Attributes.Count == 0)
+			if (atts == 0)
 			{
 				throw new Exception("Transaction without attributes, check the AttributeStartRow and AttributeStartColumn values on the config file");
 			}
-			Console.WriteLine($"Generating Export xml to {outputFile}");
-			TemplateGroup grp = new TemplateGroupString(File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "ExportTemplate.stg")));
-			Template component_tpl = grp.GetInstanceOf("g_transaction_render");
-			component_tpl.Add("component", levels[0]);
-			component_tpl.Add("attributes", attributes);
-			string xmlExport = component_tpl.Render();
-			File.WriteAllText(outputFile, xmlExport);
-			Console.WriteLine($"Success");
+
 		}
 
 		private static TransactionLevel ReadLevel(int row, ExcelWorksheet sheet, TransactionLevel level, Dictionary<int, TransactionLevel> levels, out bool  isLevel)
@@ -106,17 +167,7 @@ namespace ExcelToTransactions
 					{
 						levelId = int.Parse(sheet.Cells[row, Configuration.LevelIdColumn].Value?.ToString());
 					}
-					if (sheet.Cells[row, Configuration.LevelParentIdColumn].Value != null)
-					{
-						try
-						{
-							parentId = int.Parse(sheet.Cells[row, Configuration.LevelParentIdColumn].Value?.ToString());
-						}
-						catch
-						{
-							parentId = 0;
-						}
-					}
+					parentId = GetParentLevelId(sheet, row);
 				}
 				catch (Exception ex)
 				{
@@ -136,13 +187,38 @@ namespace ExcelToTransactions
 				levels[levelId] = newLevel;
 
 				TransactionLevel parentTrn = levels[parentId];
-				parentTrn.Levels.Add(newLevel);
+				parentTrn.Items.Add(newLevel);
 				return newLevel;
 			}
 			else
 			{
-				return level; //continue in the same level, there is no level at this row.
+				if (sheet.Cells[row, Configuration.LevelParentIdColumn].Value != null) // Explicit level id
+				{
+					int parentLevel = GetParentLevelId(sheet, row);
+					if (parentLevel >= 0 && levels.ContainsKey(parentLevel))
+						return levels[parentLevel];
+				}
+				return level; //continue in the same level, there is no level at this row, so assume the same.
 			}
+		}
+
+
+		
+
+		private static int GetParentLevelId(ExcelWorksheet sheet, int row)
+		{
+			if (sheet.Cells[row, Configuration.LevelParentIdColumn].Value != null)
+			{
+				try
+				{
+					if (int.TryParse(sheet.Cells[row, Configuration.LevelParentIdColumn].Value?.ToString(), out int parentId))
+						return parentId;
+				}
+				catch
+				{
+				}
+			}
+			return 0;
 		}
 
 		private static TransactionAttribute ReadAttribute(ExcelWorksheet sheet, int row)
@@ -152,33 +228,22 @@ namespace ExcelToTransactions
 			TransactionAttribute att = new TransactionAttribute
 			{
 				Name = sheet.Cells[row, Configuration.AttributeNameColumn].Value?.ToString().Trim(),
+				Domain = sheet.Cells[row, Configuration.AttributeDomainColumn].Value?.ToString().Trim(),
 				Description = sheet.Cells[row, Configuration.AttributeDescriptionColumn].Value?.ToString().Trim(),
-				AllowNull = sheet.Cells[row, Configuration.AttributeNullableColumn].Value != null,
-				IsKey = sheet.Cells[row, Configuration.AttributeKeyColumn].Value?.ToString().ToLower() == "pk",
+				AllowNull = sheet.Cells[row, Configuration.AttributeNullableColumn].Value?.ToString().ToLower() == Configuration.NullableValue.ToLower(),
+				IsKey = sheet.Cells[row, Configuration.AttributeKeyColumn].Value?.ToString().ToLower() == Configuration.PKValue.ToLower(),
 				Type = sheet.Cells[row, Configuration.AttributeDataTypeColumn].Value?.ToString().Trim().ToLower(),
 				Autonumber = sheet.Cells[row, Configuration.AttributeAutonumberColumn].Value?.ToString().ToLower() == "true"
-				
 			};
 			att.Guid = GuidHelper.Create(GuidHelper.DnsNamespace, att.Name, false).ToString();
-			string lenAndDecimals = sheet.Cells[row, Configuration.AttributeDataLengthColumn].Value?.ToString().Trim();
-			if (lenAndDecimals != null)
+			try
 			{
-				string[] splitedData;
-				if (lenAndDecimals.Contains("."))
-					splitedData = lenAndDecimals.Trim().Split('.');
-				else
-					splitedData = lenAndDecimals.Trim().Split(',');
-
-				att.Decimals = 0;
-				if (splitedData.Length >= 1)
-					att.Length = int.Parse(splitedData[0]);
-				if (splitedData.Length == 2)
-					att.Decimals = int.Parse(splitedData[1]);
+				if (att.Domain == null)
+					DataTypeManager.SetDataType(att.Type, att);
 			}
-			else
+			catch
 			{
-				att.Decimals = null;
-				att.Length = null;
+				Console.WriteLine("Error parsing Data Type for row " + row);
 			}
 			return att;
 		}

@@ -2,7 +2,7 @@
 
 delimiters "$", "$"
 
-g_transaction_render(component, attributes) ::=<<
+g_transaction_render(components, attributes, domains) ::=<<
 
 <?xml version="1.0" encoding="utf-8"?>
 <ExportFile>
@@ -12,6 +12,7 @@ g_transaction_render(component, attributes) ::=<<
     <Build>124546</Build>
   </KMW>
   <Objects>
+  $components:{ component | 
     <Object guid="$component.Guid$" parentGuid="afa47377-41d5-4ae8-9755-6f53150aa361" user="GeneXus" name="$component.Name$" type="1db606f2-af09-4cf9-a3b5-b481519d28f6" description="$component.Description$">
       <Part type="264be5fb-1b28-4b25-a598-6ca900dd059f">
         $g_level(component)$
@@ -21,6 +22,15 @@ g_transaction_render(component, attributes) ::=<<
         <Properties><Property><Name>IsDefault</Name><Value>True</Value></Property><Property><Name>Defaults</Name><Value>gx:TrnDefaultWinForm.dkt</Value></Property></Properties>
       </Part>
     </Object>
+};separator="\n"$
+	$domains:{ domain |
+	 <Object user="GeneXus" guid="$domain.Guid$" name="$domain.Name$" type="00972a17-9975-449e-aab1-d26165d51393">
+      <Part type="babf62c5-0111-49e9-a1c3-cc004d90900a">
+        <Properties />
+      </Part>
+	  $g_type(domain)$
+    </Object>
+	};separator="\n"$
   </Objects>
   <Attributes>
 		  $attributes:{ att | $g_attribute(att)$ };separator="\n"$
@@ -30,9 +40,8 @@ g_transaction_render(component, attributes) ::=<<
 
 g_level(component) ::=<<
   <Level Name="$component.Name$" Type="$component.Name$" Description="$component.Description$" Guid="$component.Guid$">
-		  $component.Attributes:{ att | $g_transaction_attribute(att)$ };separator="\n"$
-		  $component.Levels:{ lvl | $g_level(lvl)$ };separator="\n"$
-		 </Level>
+		 $component.Items:{ item | $if (item.IsAttribute)$ $g_transaction_attribute(item)$ $else$ $g_level(item)$ $endif$ };separator="\n"$
+  </Level>
 >>
 
 g_transaction_attribute(att) ::=<<
@@ -41,26 +50,18 @@ g_transaction_attribute(att) ::=<<
 
 g_attribute(att) ::=<<
 <Attribute guid="$att.Guid$" name="$att.Name$" description="$att.Description$">
-      <Properties><Property><Name>Name</Name><Value>$att.Name$</Value></Property><Property><Name>ATTCUSTOMTYPE</Name><Value>$enum_type.(att.Type)$</Value></Property><Property><Name>IsDefault</Name><Value>False</Value></Property>
-	  $if (att.Length)$<Property><Name>Length</Name><Value>$att.Length$</Value></Property>$endif$ $if (att.Decimals)$ <Property><Name>Decimals</Name><Value>$att.Decimals$</Value></Property> $endif$
-	  <Property><Name>Description</Name><Value>$att.Description$</Value></Property>
-	  $if (att.Autonumber)$<Property><Name>AUTONUMBER</Name><Value>True</Value></Property><Property><Name>IsDefault</Name><Value>False</Value></Property> $endif$
-	  </Properties>
+	$g_type(att)$
 </Attribute>
 >>
 
-enum_type ::= [
-	"char"		: "Character",
-	"num"		: "Numeric",
-	"numeric" : "Numeric",
-	"date"		: "Date",
-	"datetime"	: "DateTime",
-	"image"		: "Image",
-	"varchar"	: "VarChar",
-	"longvarchar" : "LongVarChar",
-	"audio": "Audio",
-	"blob" : "Blob",
-	"bool" : "Boolean",
-	"boolean" : "Boolean",
-	"video" : "Video"
-]
+g_type(att) ::=<<
+      <Properties><Property><Name>Name</Name><Value>$att.Name$</Value></Property>
+	  $if (att.Domain)$<Property><Name>idBasedOn</Name><Value>Domain:$att.Domain$</Value></Property>$else$<Property><Name>ATTCUSTOMTYPE</Name><Value>$att.Type$</Value></Property>$endif$
+	  <Property><Name>IsDefault</Name><Value>False</Value></Property>
+	  $if (att.Length)$<Property><Name>Length</Name><Value>$att.Length$</Value></Property>$endif$ $if (att.Decimals)$ <Property><Name>Decimals</Name><Value>$att.Decimals$</Value></Property> $endif$
+	  <Property><Name>Description</Name><Value>$att.Description$</Value></Property>
+	  $if (att.Sign)$<Property><Name>Signed</Name><Value>True</Value></Property>$endif$
+	  $if (att.Autonumber)$<Property><Name>AUTONUMBER</Name><Value>True</Value></Property><Property><Name>IsDefault</Name><Value>False</Value></Property> $endif$
+	  </Properties>
+>>
+
