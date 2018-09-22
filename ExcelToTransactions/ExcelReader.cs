@@ -37,7 +37,7 @@ namespace ExcelToTransactions
 			public static string TransactionDefinitionSheetName = "TransactionDefinitionSheet";
 			public static int AttributeAutonumberColumn = 12;
 			public static string PKValue = "PK";
-			public static string NullableValue = "〇";
+			public static string NullableValue = "?";
 		}
 		public static void ReadExcel(string[] files, string outputFile, bool continueOnErrors)
 		{

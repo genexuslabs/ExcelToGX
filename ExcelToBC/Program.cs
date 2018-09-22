@@ -17,6 +17,11 @@ namespace GeneXus.Utilities
 			try
 			{
 				cmd.Parse(args);
+				if (cmd.help)
+				{
+					Console.WriteLine(cmd.GetUsage());
+					return;
+				}
 			}
 			catch
 			{
@@ -28,29 +33,40 @@ namespace GeneXus.Utilities
 
 			try
 			{
-				string inputXlsx = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), cmd.ExcelFile);
-				string inputDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), cmd.ExcelFile);
-				string outputXml = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), cmd.OutputFile);
-				if (!String.IsNullOrEmpty(inputXlsx))
+				if (cmd.ExcelFile == null && cmd.Directory == null)
 				{
-					if (!File.Exists(inputXlsx))
-						Console.WriteLine($"Input File {inputXlsx} does not exists, please specify an existing xlsx file");
-					else
-						ExcelReader.ReadExcel(new string[] { inputXlsx }, outputXml, cmd.ContinueOnErrors);
+					Console.WriteLine("Specify the Directory to scan for several xlsx files or the ExcelFile option for an specific file");
+					return;
+				}
+				string outputXml = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), cmd.OutputFile);
+				if (cmd.ExcelFile != null)
+				{
+					string inputXlsx = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), cmd.ExcelFile);
+					if (!String.IsNullOrEmpty(inputXlsx))
+					{
+						if (!File.Exists(inputXlsx))
+							Console.WriteLine($"Input File {inputXlsx} does not exists, please specify an existing xlsx file");
+						else
+							ExcelReader.ReadExcel(new string[] { inputXlsx }, outputXml, cmd.ContinueOnErrors);
+					}
 				}
 				else
 				{
-					if (!String.IsNullOrEmpty(inputDirectory) && Directory.Exists(inputDirectory))
+					if (cmd.Directory != null)
 					{
-						string[] files = Directory.GetFiles(inputDirectory, "*.xlsx");
-						List<string> fullPaths = new List<string>();
-						foreach (string file in files)
-							fullPaths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), file));
-					
-						if (files.Length > 0)
-							ExcelReader.ReadExcel(fullPaths.ToArray(), outputXml, cmd.ContinueOnErrors);
-						else
-							Console.WriteLine("Could not find any xlsx on the given directory " + inputDirectory);
+						string inputDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), cmd.Directory);
+						if (!String.IsNullOrEmpty(inputDirectory) && Directory.Exists(inputDirectory))
+						{
+							string[] files = Directory.GetFiles(inputDirectory, "*.xlsx");
+							List<string> fullPaths = new List<string>();
+							foreach (string file in files)
+								fullPaths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), file));
+
+							if (files.Length > 0)
+								ExcelReader.ReadExcel(fullPaths.ToArray(), outputXml, cmd.ContinueOnErrors);
+							else
+								Console.WriteLine("Could not find any xlsx on the given directory " + inputDirectory);
+						}
 					}
 					else
 					{
