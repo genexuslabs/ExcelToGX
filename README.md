@@ -17,22 +17,25 @@ A key aspect to make it work is the configuration where you specify the location
 
 You need to configure the ExcelToBC.exe.config file with the values for:
 
+- The name of the Sheet where the Transaction is declared.
 - Row and Column for the TransactionName, Row and Column for the Transaction Description
-
 - Row and Column of the start where the the collection of attributes are specified. 
 
+
+### Attribute 
 - Specify the column for Attribute Name, Attribute Description, Attribute Data Type, Attribute Domain
 
-## Attribute Data Type
+#### Type
 The Data Type can be specified in the same way you write in the GeneXus Transaction editor.
 
 For example: 
 
 Num(8.2), Numeric(8.2) , DateTime, Numeric(4-), Character(20), Char(20), VarChar(300), Numeric(7.2-), etc
 
-- The name of the Sheet where the Transaction is declared.
 - In order to specify when an Attribute is a PK there is an AttributeKeyColumn setting that specify wich column to check and a PKValue to specify what value to search for in this column that say that is Key. The default value is "PK"
 - In order to specify when an Attribute allows null there is an AttributeNullableColumn and a NullableValue with default value "?"
+
+### Levels
 - In order to identify a Level we must specify the following settings:
   - LevelIdentifierKeyword and LevelCheckColumn, basically you said in what column we need to check for the keyword specified.
   For example the identifier keyword could be "LVL" and the column could be the first one.
