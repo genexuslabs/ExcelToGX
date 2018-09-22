@@ -15,7 +15,7 @@ Scan the given directory looking for .xlsx files and create a file with all the 
 ```
 ExcelToBC.exe /d:MyDefinitionsDirectory /o:MyExport.xml
 ```
-
+When you are creating a export file from several xlsx files in some cases could be a conflict for an attribute data type. For example the same attribute in different files with different data types. In this cases the first definition for the attribute is used and a warning is raised when appears a definition with some kind of conflict.
 
 
 ## Configuration
