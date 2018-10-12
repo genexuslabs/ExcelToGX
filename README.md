@@ -4,11 +4,18 @@ Command Line utility to allow declaring a GeneXus Transaction in an Excel file a
 
 You can use just the binary located on the Bin directory of this repository. 
 
-## Sample Execution
+## Sample Executions
 
+Convert a xlsx file to a GeneXus export
 ```
 ExcelToBC.exe /x:Test.xlsx /o:MyExport.xml
 ```
+
+Scan the given directory looking for .xlsx files and create a file with all the transaction found.
+```
+ExcelToBC.exe /d:MyDefinitionsDirectory /o:MyExport.xml
+```
+When you are creating a export file from several xlsx files in some cases could be a conflict for an attribute data type. For example the same attribute in different files with different data types. In this cases the first definition for the attribute is used and a warning is raised when appears a definition with some kind of conflict.
 
 
 ## Configuration
@@ -32,6 +39,10 @@ For example:
 
 Num(8.2), Numeric(8.2) , DateTime, Numeric(4-), Character(20), Char(20), VarChar(300), Numeric(7.2-), etc
 
+#### Domain
+When you specify a value for the Domain column the attribute became based on this Domain. In general the Type column should be empty, it depends if you are just referencing the Domain or if you want to define the Data Type for the Domain.
+When the Domain column has a value the Type column is considered the Data Type for the given Domain. 
+
 - In order to specify when an Attribute is a PK there is an AttributeKeyColumn setting that specify wich column to check and a PKValue to specify what value to search for in this column that say that is Key. The default value is "PK"
 - In order to specify when an Attribute allows null there is an AttributeNullableColumn and a NullableValue with default value "?"
 
@@ -51,6 +62,11 @@ Num(8.2), Numeric(8.2) , DateTime, Numeric(4-), Character(20), Char(20), VarChar
 For a Excel like the following:
 
 ![Image of Sample](https://github.com/genexuslabs/ExcelToBC/blob/master/sample.png)
+
+The imported Transaction in GeneXus will be
+
+![Image of Result](https://github.com/genexuslabs/ExcelToBC/blob/master/importedTrn.png)
+
 
 The Configuration File should be>
 
