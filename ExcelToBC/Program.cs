@@ -92,6 +92,7 @@ namespace GeneXus.Utilities
 			Configuration.AttributeNameColumn = Settings.Default.AttributeNameColumn;
 			Configuration.AttributeDescriptionColumn = Settings.Default.AttributeDescriptionColumn;
 			Configuration.AttributeDataTypeColumn = Settings.Default.AttributeDataTypeColumn;
+            Configuration.AttributeDataLengthColumn = Settings.Default.AttributeDataLengthColumn;
 			
 			Configuration.AttributeKeyColumn = Settings.Default.AttributeKeyColumn;
 			Configuration.AttributeNullableColumn = Settings.Default.AttributeNullableColumn;

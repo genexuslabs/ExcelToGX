@@ -193,5 +193,14 @@ namespace ExcelToBC.Properties {
                 return ((int)(this["DomainColumn"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("9")]
+        public int AttributeDataLengthColumn {
+            get {
+                return ((int)(this["AttributeDataLengthColumn"]));
+            }
+        }
     }
 }

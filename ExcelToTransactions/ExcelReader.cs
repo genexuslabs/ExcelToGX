@@ -88,7 +88,7 @@ namespace ExcelToTransactions
 			var excel = new ExcelPackage(new System.IO.FileInfo(fileName));
 			ExcelWorksheet sheet = excel.Workbook.Worksheets[Configuration.TransactionDefinitionSheetName];
 			if (sheet == null)
-				throw new Exception($"Please provide the transaction definition in a Sheet called {Configuration.TransactionDefinitionSheetName}");
+				throw new Exception($"The xlsx file {{fileName}} was open but it have not a definition sheet for the Transaction. Please provide the transaction definition in a Sheet called {Configuration.TransactionDefinitionSheetName}");
 
 			string trnName = sheet.Cells[Configuration.TransactionNameRow, Configuration.TransactionNameCol].Value?.ToString();
 			if (trnName == null)
@@ -113,7 +113,7 @@ namespace ExcelToTransactions
 				{
 					try
 					{
-						TransactionAttribute att = ReadAttribute(sheet, row);
+						TransactionAttribute att = ReadAttribute(sheet, row, continueOnError);
 						if (att.Domain != null && att.Type != null && !domains.ContainsKey(att.Domain))
 						{
 							TransactionAttribute domain = new TransactionAttribute
@@ -221,7 +221,7 @@ namespace ExcelToTransactions
 			return 0;
 		}
 
-		private static TransactionAttribute ReadAttribute(ExcelWorksheet sheet, int row)
+		private static TransactionAttribute ReadAttribute(ExcelWorksheet sheet, int row, bool contineOnErrors)
 		{
 			if (String.IsNullOrEmpty(sheet.Cells[row, Configuration.AttributeNameColumn].Value?.ToString().Trim()))
 				return null;
@@ -238,14 +238,48 @@ namespace ExcelToTransactions
 			att.Guid = GuidHelper.Create(GuidHelper.DnsNamespace, att.Name, false).ToString();
 			try
 			{
-				if (att.Domain == null)
-					DataTypeManager.SetDataType(att.Type, att);
+                if (att.Domain == null)
+                {
+                    DataTypeManager.SetDataType(att.Type, att);
+                    try
+                    {
+                        SetLengthAndDecimals(sheet, row, att);
+                    }
+                    catch (Exception ex) //never fail because a wrong length/decimals definition, just use the defaults values.
+                    {
+                        Console.WriteLine("Error parsing Data Type for row " + row);
+                        HandleException(sheet.Name, ex, contineOnErrors);
+                    }
+                }
 			}
-			catch
+			catch (Exception ex)
 			{
-				Console.WriteLine("Error parsing Data Type for row " + row);
+                Console.WriteLine("Error parsing Data Type for row " + row);
+                HandleException(sheet.Name, ex, contineOnErrors);
 			}
 			return att;
 		}
-	}
+
+        private static void SetLengthAndDecimals(ExcelWorksheet sheet, int row, TransactionAttribute att)
+        {
+            string lenAndDecimals = sheet.Cells[row, Configuration.AttributeDataLengthColumn].Value?.ToString().Trim();
+            if (!String.IsNullOrEmpty(lenAndDecimals))
+            {
+                string[] splitedData;
+                if (lenAndDecimals.Contains("."))
+                    splitedData = lenAndDecimals.Trim().Split('.');
+                else
+                    splitedData = lenAndDecimals.Trim().Split(',');
+                int length, decimals;
+                if (splitedData.Length >= 1 && int.TryParse(splitedData[0], out length))
+                {
+                    att.Length = length;
+                }
+                if (splitedData.Length == 2 && int.TryParse(splitedData[1], out decimals))
+                {
+                    att.Decimals = decimals;
+                }
+            }
+        }
+    }
 }
