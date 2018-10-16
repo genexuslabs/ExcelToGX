@@ -33,11 +33,13 @@ You need to configure the ExcelToBC.exe.config file with the values for:
 - Specify the column for Attribute Name, Attribute Description, Attribute Data Type, Attribute Domain
 
 #### Type
-The Data Type can be specified in the same way you write in the GeneXus Transaction editor.
+The Data Type can be specified in the same way you write in the GeneXus Transaction editor. Just by using Data Type Column.
 
 For example: 
 
 Num(8.2), Numeric(8.2) , DateTime, Numeric(4-), Character(20), Char(20), VarChar(300), Numeric(7.2-), etc
+
+Or is possible to use a separated column for Length and Decimals. In this case you use the Data Type Column just for the Type name and the AttributeDataLengthColumn in order to configure the Data Length, Decimals and Sign.
 
 #### Domain
 When you specify a value for the Domain column the attribute became based on this Domain. In general the Type column should be empty, it depends if you are just referencing the Domain or if you want to define the Data Type for the Domain.
