@@ -265,6 +265,11 @@ namespace ExcelToTransactions
             string lenAndDecimals = sheet.Cells[row, Configuration.AttributeDataLengthColumn].Value?.ToString().Trim();
             if (!String.IsNullOrEmpty(lenAndDecimals))
             {
+                if (lenAndDecimals.Length > 0 && lenAndDecimals.EndsWith("-"))
+                {
+                    att.Sign = true;
+                    lenAndDecimals = lenAndDecimals.Replace("-", "");
+                }
                 string[] splitedData;
                 if (lenAndDecimals.Contains("."))
                     splitedData = lenAndDecimals.Trim().Split('.');
