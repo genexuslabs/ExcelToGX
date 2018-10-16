@@ -13,7 +13,11 @@ namespace GeneXus.Utilities
 	{
 		static void Main(string[] args)
 		{
-			ConvertCommandLine cmd = new ConvertCommandLine();
+
+            if (!ReadConfiguration())
+                return;
+
+            ConvertCommandLine cmd = new ConvertCommandLine();
 			try
 			{
 				cmd.Parse(args);
@@ -28,8 +32,6 @@ namespace GeneXus.Utilities
 				Console.WriteLine(cmd.GetUsage());
 				return;
 			}
-			// Read Configuration from App.config
-			ReadConfiguration();
 
 			try
 			{
@@ -81,9 +83,19 @@ namespace GeneXus.Utilities
 			}
 		}
 
-		private static void ReadConfiguration()
+        public static bool CheckConfigFileIsPresent()
+        {
+            return File.Exists(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
+        }
+
+        private static bool ReadConfiguration()
 		{
-			Configuration.TransactionNameRow = Settings.Default.TransactionNameRow;
+            if (!CheckConfigFileIsPresent())
+            {
+                Console.WriteLine("Missing Config file, Config file is used to configurate all settings for this tool, see documentation on https://github.com/genexuslabs/ExcelToBC");
+                return false;
+            }
+            Configuration.TransactionNameRow = Settings.Default.TransactionNameRow;
 			Configuration.TransactionNameCol = Settings.Default.TransactionNameCol;
 			Configuration.TransactionDescColumn = Settings.Default.TransactionDescCol;
 			Configuration.TransactionDescRow = Settings.Default.TransactionDescRow;
@@ -105,6 +117,7 @@ namespace GeneXus.Utilities
 			Configuration.PKValue = Settings.Default.PKValue;
 			Configuration.NullableValue = Settings.Default.NullableValue;
 			Configuration.AttributeDomainColumn = Settings.Default.DomainColumn;
+            return true;
 		}
 	}
 

@@ -33,6 +33,31 @@ namespace TestExcel
 			Configuration.AttributeKeyColumn = 3;
 			Configuration.AttributeNullableColumn = 6;
 		}
+
+        private void ConfigJapan()
+        {
+            Configuration.TransactionDefinitionSheetName = "トランザクション定義書";
+            Configuration.TransactionNameRow = 3;
+            Configuration.TransactionNameCol = 12;
+            Configuration.TransactionDescRow = 3;
+            Configuration.TransactionDescColumn = 13;
+            Configuration.AttributeStartRow = 6;
+            Configuration.AttributesStartColumn = 2;
+            Configuration.AttributeKeyColumn = 7;
+            Configuration.PKValue = "PK";
+            Configuration.AttributeNameColumn = 5;
+            Configuration.AttributeDescriptionColumn = 6;
+            Configuration.AttributeDomainColumn = 8;
+            Configuration.AttributeDataTypeColumn = 9;
+            Configuration.AttributeDataLengthColumn = 10;
+            Configuration.AttributeNullableColumn = 11;
+            Configuration.NullableValue = "Y";
+            Configuration.LevelCheckColumn = 3;
+            Configuration.LevelIdentifierKeyword = "レベル";
+            Configuration.LevelIdColumn = 2;
+            Configuration.LevelParentIdColumn = 4;
+        }
+
 		[TestMethod]
 		public void TestReadOneFile()
 		{
@@ -42,7 +67,16 @@ namespace TestExcel
 				, Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "trns.xml"), false);
 		}
 
-		[TestMethod]
+        [TestMethod]
+        public void TestJapanFile()
+        {
+            ConfigJapan();
+            ExcelReader.ReadExcel(new string[] { Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TransactionDefinition.xlsx") }
+                , Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "trnsJapan.xml"), false);
+
+        }
+
+        [TestMethod]
 		public void TestReadFiles()
 		{
 			Config();

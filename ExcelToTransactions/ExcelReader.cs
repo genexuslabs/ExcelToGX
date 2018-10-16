@@ -88,7 +88,7 @@ namespace ExcelToTransactions
 			var excel = new ExcelPackage(new System.IO.FileInfo(fileName));
 			ExcelWorksheet sheet = excel.Workbook.Worksheets[Configuration.TransactionDefinitionSheetName];
 			if (sheet == null)
-				throw new Exception($"The xlsx file {{fileName}} was open but it have not a definition sheet for the Transaction. Please provide the transaction definition in a Sheet called {Configuration.TransactionDefinitionSheetName}");
+				throw new Exception($"The xlsx file {fileName} was open but it have not a definition sheet for the Transaction. Please provide the transaction definition in a Sheet called {Configuration.TransactionDefinitionSheetName}");
 
 			string trnName = sheet.Cells[Configuration.TransactionNameRow, Configuration.TransactionNameCol].Value?.ToString();
 			if (trnName == null)
@@ -173,10 +173,10 @@ namespace ExcelToTransactions
 				{
 					throw new Exception($"Invalid identifier for level at {row}, {Configuration.LevelIdColumn} " + ex.Message, ex);
 				}
-				string levelName = sheet.Cells[row, Configuration.TransactionNameCol].Value?.ToString();
+				string levelName = sheet.Cells[row, Configuration.AttributeNameColumn].Value?.ToString();
 				if (levelName == null)
-					throw new Exception($"Could not find the Level name at [{row} , {Configuration.TransactionNameCol}], please take a look at the configuration file ");
-				string levelDesc = sheet.Cells[Configuration.TransactionDescRow, Configuration.TransactionDescColumn].Value?.ToString();
+					throw new Exception($"Could not find the Level name at [{row} , {Configuration.AttributeNameColumn}], please take a look at the configuration file ");
+				string levelDesc = sheet.Cells[row, Configuration.AttributeDescriptionColumn].Value?.ToString();
 				TransactionLevel newLevel = new TransactionLevel
 				{
 					Name = levelName,
