@@ -59,9 +59,7 @@
     <None Include="Test.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="TransactionDefinition.xlsx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="TransactionDefinition.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ExcelToTransactions\ExcelToTransactions.csproj">
