@@ -63,11 +63,11 @@ When the Domain column has a value the Type column is considered the Data Type f
 
 For a Excel like the following:
 
-![Image of Sample](https://github.com/genexuslabs/ExcelToGX/blob/master/sample.png)
+![Image of Sample](https://github.com/genexuslabs/ExcelToBC/blob/master/sample.png)
 
 The imported Transaction in GeneXus will be
 
-![Image of Result](https://github.com/genexuslabs/ExcelToGX/blob/master/importedTrn.png)
+![Image of Result](https://github.com/genexuslabs/ExcelToBC/blob/master/importedTrn.png)
 
 
 The Configuration File should be>
