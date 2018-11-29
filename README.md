@@ -70,81 +70,81 @@ The imported Transaction in GeneXus will be
 ![Image of Result](https://github.com/genexuslabs/ExcelToBC/blob/master/importedTrn.png)
 
 
-The Configuration File should be>
+The Configuration File should be
 
-```
+```xml
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
-    <configSections>
-        <sectionGroup name="applicationSettings" type="System.Configuration.ApplicationSettingsGroup, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" >
-            <section name="ExcelToGX.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
-        </sectionGroup>
-    </configSections>
-    <startup> 
-        <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.7.1" />
-    </startup>
+  <configSections>
+    <sectionGroup name="applicationSettings" type="System.Configuration.ApplicationSettingsGroup, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" >
+      <section name="ExcelToGX.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
+    </sectionGroup>
+  </configSections>
+  <startup> 
+    <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.7.1" />
+  </startup>
   <applicationSettings>
-        <ExcelToGX.Properties.Settings>
-            <setting name="ObjectNameRow" serializeAs="String">
-                <value>3</value>
-            </setting>
-            <setting name="ObjectNameColumn" serializeAs="String">
-                <value>7</value>
-            </setting>
-            <setting name="ObjectDescRow" serializeAs="String">
-                <value>3</value>
-            </setting>
-            <setting name="ObjectDescColumn" serializeAs="String">
-                <value>11</value>
-            </setting>
-            <setting name="AttributeStartRow" serializeAs="String">
-                <value>7</value>
-            </setting>
-            <setting name="AttributeStartColumn" serializeAs="String">
-                <value>2</value>
-            </setting>
-            <setting name="AttributeNameColumn" serializeAs="String">
-                <value>7</value>
-            </setting>
-            <setting name="AttributeDescriptionColumn" serializeAs="String">
-                <value>6</value>
-            </setting>
-            <setting name="AttributeNullableColumn" serializeAs="String">
-                <value>4</value>
-            </setting>
-            <setting name="AttributeKeyColumn" serializeAs="String">
-                <value>3</value>
-            </setting>
-            <setting name="AttributeDataTypeColumn" serializeAs="String">
-                <value>8</value>
-            </setting>
-            <setting name="DefinitionSheetName" serializeAs="String">
-                <value>てすと</value>
-            </setting>
-            <setting name="LevelCheckColumn" serializeAs="String">
-                <value>3</value>
-            </setting>
-            <setting name="LevelIdColumn" serializeAs="String">
-                <value>2</value>
-            </setting>
-            <setting name="LevelParentIdColumn" serializeAs="String">
-                <value>7</value>
-            </setting>
-            <setting name="LevelIdentifierKeyword" serializeAs="String">
-                <value> レベル1</value>
-            </setting>
-            <setting name="PKValue" serializeAs="String">
-                <value>PK</value>
-            </setting>
-            <setting name="NullableValue" serializeAs="String">
-                <value>〇</value>
-            </setting>
-            <setting name="DomainColumn" serializeAs="String">
-                <value>10</value>
-            </setting>
-        </ExcelToGX.Properties.Settings>
-    </applicationSettings>
-   </configuration>
+    <ExcelToGX.Properties.Settings>
+      <setting name="ObjectNameRow" serializeAs="String">
+        <value>3</value>
+      </setting>
+      <setting name="ObjectNameColumn" serializeAs="String">
+        <value>7</value>
+      </setting>
+      <setting name="ObjectDescRow" serializeAs="String">
+        <value>3</value>
+      </setting>
+      <setting name="ObjectDescColumn" serializeAs="String">
+        <value>11</value>
+      </setting>
+      <setting name="AttributeStartRow" serializeAs="String">
+        <value>7</value>
+      </setting>
+      <setting name="AttributeStartColumn" serializeAs="String">
+        <value>2</value>
+      </setting>
+      <setting name="AttributeNameColumn" serializeAs="String">
+        <value>7</value>
+      </setting>
+      <setting name="AttributeDescriptionColumn" serializeAs="String">
+        <value>6</value>
+      </setting>
+      <setting name="AttributeNullableColumn" serializeAs="String">
+        <value>4</value>
+      </setting>
+      <setting name="AttributeKeyColumn" serializeAs="String">
+        <value>3</value>
+      </setting>
+      <setting name="AttributeDataTypeColumn" serializeAs="String">
+        <value>8</value>
+      </setting>
+      <setting name="DefinitionSheetName" serializeAs="String">
+        <value>てすと</value>
+      </setting>
+      <setting name="LevelCheckColumn" serializeAs="String">
+        <value>3</value>
+      </setting>
+      <setting name="LevelIdColumn" serializeAs="String">
+        <value>2</value>
+      </setting>
+      <setting name="LevelParentIdColumn" serializeAs="String">
+        <value>7</value>
+      </setting>
+      <setting name="LevelIdentifierKeyword" serializeAs="String">
+        <value> レベル1</value>
+      </setting>
+      <setting name="PKValue" serializeAs="String">
+        <value>PK</value>
+      </setting>
+      <setting name="NullableValue" serializeAs="String">
+        <value>〇</value>
+      </setting>
+      <setting name="DomainColumn" serializeAs="String">
+        <value>10</value>
+      </setting>
+    </ExcelToGX.Properties.Settings>
+  </applicationSettings>
+</configuration>
 ```
 ## Command Line Tool Specification
 
