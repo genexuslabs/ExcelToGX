@@ -1,0 +1,68 @@
+﻿group ExportGenerator;
+
+delimiters "$", "$"
+
+g_transaction_render(components, attributes, domains) ::=<<
+
+<?xml version="1.0" encoding="utf-8"?>
+<ExportFile>
+  <KMW>
+    <MajorVersion>4</MajorVersion>
+    <MinorVersion>0</MinorVersion>
+    <Build>124546</Build>
+  </KMW>
+  <Objects>
+$components:{ component |
+    <Object guid="$component.Guid$" parentGuid="afa47377-41d5-4ae8-9755-6f53150aa361" user="GeneXus" name="$component.Name$" type="1db606f2-af09-4cf9-a3b5-b481519d28f6" description="$component.Description$">
+      <Part type="264be5fb-1b28-4b25-a598-6ca900dd059f">
+      $g_level(component)$
+        <Properties><Property><Name>IsDefault</Name><Value>False</Value></Property></Properties>
+      </Part>
+      <Part type="4c28dfb9-f83b-46f0-9cf3-f7e090b525d5">
+        <Properties><Property><Name>IsDefault</Name><Value>True</Value></Property><Property><Name>Defaults</Name><Value>gx:TrnDefaultWinForm.dkt</Value></Property></Properties>
+      </Part>
+    </Object>};separator="\n"$
+$domains:{ domain |
+    <Object user="GeneXus" guid="$domain.Guid$" name="$domain.Name$" type="00972a17-9975-449e-aab1-d26165d51393">
+      <Part type="babf62c5-0111-49e9-a1c3-cc004d90900a">
+        <Properties />
+      </Part>
+      $g_type(domain)$
+    </Object>};separator="\n"$
+  </Objects>
+  <Attributes>
+    $attributes:{ att | $g_attribute(att)$ };separator="\n"$
+  </Attributes>
+</ExportFile>
+>>
+
+g_level(component) ::=<<
+  <Level Name="$component.Name$" Type="$component.Name$" Description="$component.Description$" Guid="$component.Guid$">
+  $component.Items:{ item | $if (item.IsAttribute)$$g_transaction_attribute(item)$$else$$g_level(item)$$endif$ };separator="\n"$
+  </Level>
+>>
+
+g_transaction_attribute(att) ::=<<
+  <Attribute$if (att.IsKey)$ key="True" $endif$$if (att.AllowNull)$ isNullable="$att.AllowNull$" $endif$>$att.Name$</Attribute>
+>>
+
+g_attribute(att) ::=<<
+<Attribute guid="$att.Guid$" name="$att.Name$" description="$att.Description$">
+  $g_type(att)$
+</Attribute>
+>>
+
+g_type(att) ::=<<
+<Properties>
+  <Property><Name>Name</Name><Value>$att.Name$</Value></Property>
+  <Property><Name>Description</Name><Value>$att.Description$</Value></Property>
+  <Property><Name>IsDefault</Name><Value>False</Value></Property>$if (att.Domain)$
+  <Property><Name>idBasedOn</Name><Value>Domain:$att.Domain$</Value></Property>$else$
+  <Property><Name>ATTCUSTOMTYPE</Name><Value>$att.Type$</Value></Property>$endif$$if (att.Length)$
+  <Property><Name>Length</Name><Value>$att.Length$</Value></Property>$endif$$if (att.Decimals)$
+  <Property><Name>Decimals</Name><Value>$att.Decimals$</Value></Property>$endif$$if (att.Sign)$
+  <Property><Name>Signed</Name><Value>True</Value></Property>$endif$$if (att.Autonumber)$
+  <Property><Name>AUTONUMBER</Name><Value>True</Value></Property>$endif$
+
+</Properties>
+>>
