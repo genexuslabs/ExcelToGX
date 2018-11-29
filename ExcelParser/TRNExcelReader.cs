@@ -5,71 +5,55 @@ using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Reflection;
 
 namespace ExcelParser
 {
-	public class TRNExcelReader : ExcelReader<TRNExcelReader.TrnConfiguration>
+	public class TRNExcelReader : ExcelReader<TRNExcelReader.TRNConfiguration>
 	{
-		public class TrnConfiguration : BaseConfiguration
+		Dictionary<string, TransactionLevel> Transactions;
+		Dictionary<string, TransactionAttribute> Attributes;
+		Dictionary<string, TransactionAttribute> Domains;
+
+		public class TRNConfiguration : BaseConfiguration
 		{
-			public TrnConfiguration()
+			public TRNConfiguration()
 			{
 				DefinitionSheetName = "TransactionDefinitionSheet";
 			}
 		}
 
-		public void ReadExcel(string[] files, string outputFile, bool continueOnErrors)
+		protected override void Initialize()
 		{
-			Dictionary<string, TransactionLevel> transactions = new Dictionary<string, TransactionLevel>();
-			Dictionary<string, TransactionAttribute> attributes = new Dictionary<string, TransactionAttribute>();
-			Dictionary<string, TransactionAttribute> domains = new Dictionary<string, TransactionAttribute>();
-
-			foreach (string fileName in files)
-			{
-				try
-				{
-					ProcessFile(fileName, transactions, attributes, domains, continueOnErrors);
-				}
-				catch (Exception ex)
-				{
-					HandleException(fileName, ex, continueOnErrors);
-				}
-			}
-			Console.WriteLine($"Generating Export xml to {outputFile}");
-			TemplateGroup grp = new TemplateGroupString(File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "ExportTemplate.stg")));
-			Template component_tpl = grp.GetInstanceOf("g_transaction_render");
-			component_tpl.Add("components", transactions.Values);
-			component_tpl.Add("attributes", attributes.Values);
-			if (domains.Values != null)
-				component_tpl.Add("domains", domains.Values);
-			string xmlExport = component_tpl.Render();
-			File.WriteAllText(outputFile, xmlExport);
-			Console.WriteLine($"Success");
+			Transactions = new Dictionary<string, TransactionLevel>();
+			Attributes = new Dictionary<string, TransactionAttribute>();
+			Domains = new Dictionary<string, TransactionAttribute>();
 		}
 
-		private void ProcessFile(string fileName, Dictionary<string, TransactionLevel> transactions, Dictionary<string, TransactionAttribute> attributes, Dictionary<string, TransactionAttribute> domains, bool continueOnError)
+		protected override string TemplateFile => "ExportTRNTemplate.stg";
+		protected override string TemplateRender => "g_transaction_render";
+
+		protected override void SetTemplateProperties(Template component_tpl)
+		{
+			base.SetTemplateProperties(component_tpl);
+			component_tpl.Add("components", Transactions.Values);
+			component_tpl.Add("attributes", Attributes.Values);
+			if (Domains.Values.Count > 0)
+				component_tpl.Add("domains", Domains.Values);
+		}
+
+		protected override void ProcessFile(ExcelWorksheet sheet, string objName)
 		{
 			Dictionary<int, TransactionLevel> levels = new Dictionary<int, TransactionLevel>();
-			var excel = new ExcelPackage(new FileInfo(fileName));
-			ExcelWorksheet sheet = excel.Workbook.Worksheets[Configuration.DefinitionSheetName];
-			if (sheet == null)
-				throw new Exception($"The xlsx file {fileName} was open but it have not a definition sheet for the Transaction. Please provide the transaction definition in a Sheet called {Configuration.DefinitionSheetName}");
-
-			string trnName = sheet.Cells[Configuration.ObjectNameRow, Configuration.ObjectNameColumn].Value?.ToString();
-			if (trnName == null)
-				throw new Exception($"Could not find the Transaction name at [{Configuration.ObjectNameRow} , {Configuration.ObjectNameColumn}], please take a look at the configuration file ");
 			string trnDescription = sheet.Cells[Configuration.ObjectDescRow, Configuration.ObjectDescColumn].Value?.ToString();
 			TransactionLevel level = new TransactionLevel
 			{
-				Name = trnName,
-				Guid = GuidHelper.Create(GuidHelper.IsoOidNamespace, trnName, false).ToString(),
+				Name = objName,
+				Guid = GuidHelper.Create(GuidHelper.IsoOidNamespace, objName, false).ToString(),
 				Description = trnDescription
 			};
 			levels[0] = level;
-			Console.WriteLine($"Processing Transaction {trnName} with Description {trnDescription}");
-			transactions[trnName] = level;
+			Console.WriteLine($"Processing Transaction {objName} with Description {trnDescription}");
+			Transactions[objName] = level;
 
 			int row = Configuration.AttributeStartRow;
 			int atts = 0;
@@ -80,8 +64,8 @@ namespace ExcelParser
 				{
 					try
 					{
-						TransactionAttribute att = ReadAttribute(sheet, row, continueOnError);
-						if (att.Domain != null && att.Type != null && !domains.ContainsKey(att.Domain))
+						TransactionAttribute att = ReadAttribute(sheet, row);
+						if (att.Domain != null && att.Type != null && !Domains.ContainsKey(att.Domain))
 						{
 							TransactionAttribute domain = new TransactionAttribute
 							{
@@ -89,13 +73,13 @@ namespace ExcelParser
 								Guid = GuidHelper.Create(GuidHelper.UrlNamespace, att.Domain, false).ToString()
 							};
 							DataTypeManager.SetDataType(att.Type, domain);
-							domains[domain.Name.ToLower()] = domain;
+							Domains[domain.Name.ToLower()] = domain;
 						}
 						if (att != null)
 						{
-							if (attributes.ContainsKey(att.Name) && att.ToString() != attributes[att.Name].ToString())
-								Console.WriteLine($"{att.Name} was already defined with a different data type {attributes[att.Name].ToString()}, taking into account the last one {att.ToString()}");
-							attributes[att.Name] = att;
+							if (Attributes.ContainsKey(att.Name) && att.ToString() != Attributes[att.Name].ToString())
+								Console.WriteLine($"{att.Name} was already defined with a different data type {Attributes[att.Name].ToString()}, taking into account the last one {att.ToString()}");
+							Attributes[att.Name] = att;
 							atts++;
 							level.Items.Add(att);
 							Console.WriteLine($"Processing Attribute {att.Name}");
@@ -104,9 +88,8 @@ namespace ExcelParser
 						else
 							break;
 					}
-					catch (Exception ex)
+					catch (Exception ex) when (HandleException($"at row:{row}", ex, true))
 					{
-						HandleException(fileName + $" at row:{row}", ex, continueOnError);
 					}
 				}
 				else
@@ -185,7 +168,7 @@ namespace ExcelParser
 			return 0;
 		}
 
-		private TransactionAttribute ReadAttribute(ExcelWorksheet sheet, int row, bool contineOnErrors)
+		private TransactionAttribute ReadAttribute(ExcelWorksheet sheet, int row)
 		{
 			if (string.IsNullOrEmpty(sheet.Cells[row, Configuration.AttributeNameColumn].Value?.ToString().Trim()))
 				return null;
@@ -212,14 +195,14 @@ namespace ExcelParser
 					catch (Exception ex) //never fail because a wrong length/decimals definition, just use the defaults values.
 					{
 						Console.WriteLine("Error parsing Data Type for row " + row);
-						HandleException(sheet.Name, ex, contineOnErrors);
+						HandleException(sheet.Name, ex);
 					}
 				}
 			}
 			catch (Exception ex)
 			{
 				Console.WriteLine("Error parsing Data Type for row " + row);
-				HandleException(sheet.Name, ex, contineOnErrors);
+				HandleException(sheet.Name, ex);
 			}
 			return att;
 		}

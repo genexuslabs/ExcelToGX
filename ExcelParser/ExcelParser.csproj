@@ -60,7 +60,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ExportTemplate.stg">
+    <None Include="ExportTRNTemplate.stg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
