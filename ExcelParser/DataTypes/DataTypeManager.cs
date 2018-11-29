@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExcelToTransactions.DataTypes
+namespace ExcelParser.DataTypes
 {
 	public class DataTypeManager
 	{

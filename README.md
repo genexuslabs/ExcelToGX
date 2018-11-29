@@ -1,4 +1,4 @@
-﻿# ExcelToBC
+﻿# ExcelToGX
 
 Command Line utility to allow declaring a GeneXus Transaction in an Excel file and converting it to a GeneXus export file.
 
@@ -8,12 +8,12 @@ You can use just the binary located on the Bin directory of this repository.
 
 Convert a xlsx file to a GeneXus export
 ```
-ExcelToBC.exe /x:Test.xlsx /o:MyExport.xml
+ExcelToGX.exe /x:Test.xlsx /o:MyExport.xml
 ```
 
 Scan the given directory looking for .xlsx files and create a file with all the transaction found.
 ```
-ExcelToBC.exe /d:MyDefinitionsDirectory /o:MyExport.xml
+ExcelToGX.exe /d:MyDefinitionsDirectory /o:MyExport.xml
 ```
 When you are creating a export file from several xlsx files in some cases could be a conflict for an attribute data type. For example the same attribute in different files with different data types. In this cases the first definition for the attribute is used and a warning is raised when appears a definition with some kind of conflict.
 
@@ -22,7 +22,7 @@ When you are creating a export file from several xlsx files in some cases could 
 
 A key aspect to make it work is the configuration where you specify the locations of certain key cells in the Excel file.
 
-You need to configure the ExcelToBC.exe.config file with the values for:
+You need to configure the ExcelToGX.exe.config file with the values for:
 
 - The name of the Sheet where the Transaction is declared.
 - Row and Column for the TransactionName, Row and Column for the Transaction Description
@@ -63,11 +63,11 @@ When the Domain column has a value the Type column is considered the Data Type f
 
 For a Excel like the following:
 
-![Image of Sample](https://github.com/genexuslabs/ExcelToBC/blob/master/sample.png)
+![Image of Sample](https://github.com/genexuslabs/ExcelToGX/blob/master/sample.png)
 
 The imported Transaction in GeneXus will be
 
-![Image of Result](https://github.com/genexuslabs/ExcelToBC/blob/master/importedTrn.png)
+![Image of Result](https://github.com/genexuslabs/ExcelToGX/blob/master/importedTrn.png)
 
 
 The Configuration File should be>
@@ -77,21 +77,24 @@ The Configuration File should be>
 <configuration>
     <configSections>
         <sectionGroup name="applicationSettings" type="System.Configuration.ApplicationSettingsGroup, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" >
-            <section name="ExcelToBC.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
+            <section name="ExcelToGX.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
         </sectionGroup>
     </configSections>
     <startup> 
         <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.7.1" />
     </startup>
   <applicationSettings>
-        <ExcelToBC.Properties.Settings>
-            <setting name="TransactionNameRow" serializeAs="String">
+        <ExcelToGX.Properties.Settings>
+            <setting name="ObjectNameRow" serializeAs="String">
                 <value>3</value>
             </setting>
-            <setting name="TransactionNameCol" serializeAs="String">
+            <setting name="ObjectNameColumn" serializeAs="String">
                 <value>7</value>
             </setting>
-            <setting name="TransactionDescCol" serializeAs="String">
+            <setting name="ObjectDescRow" serializeAs="String">
+                <value>3</value>
+            </setting>
+            <setting name="ObjectDescColumn" serializeAs="String">
                 <value>11</value>
             </setting>
             <setting name="AttributeStartRow" serializeAs="String">
@@ -115,11 +118,8 @@ The Configuration File should be>
             <setting name="AttributeDataTypeColumn" serializeAs="String">
                 <value>8</value>
             </setting>
-            <setting name="TransactionDefinitionSheetName" serializeAs="String">
+            <setting name="DefinitionSheetName" serializeAs="String">
                 <value>てすと</value>
-            </setting>
-            <setting name="TransactionDescRow" serializeAs="String">
-                <value>3</value>
             </setting>
             <setting name="LevelCheckColumn" serializeAs="String">
                 <value>3</value>
@@ -142,20 +142,20 @@ The Configuration File should be>
             <setting name="DomainColumn" serializeAs="String">
                 <value>10</value>
             </setting>
-        </ExcelToBC.Properties.Settings>
+        </ExcelToGX.Properties.Settings>
     </applicationSettings>
    </configuration>
 ```
 ## Command Line Tool Specification
 
-The ExcelToBC is a command line tool with the following specification
+The ExcelToGX is a command line tool with the following specification
 
 
-ExcelToBC v1.0.0.0
+ExcelToGX v1.0.0.0
 Copyright GeneXus c  2018
-Allow to convert a transaction specified in Excel to a Genexus Export file
+Allow to convert definitions in Excel to a Genexus Export file
 
-Usage: ExcelToBC.exe [@argfile] [/ExcelFile|x:<value>] [/Directory|d:<value>]
+Usage: ExcelToGX.exe [@argfile] [/ExcelFile|x:<value>] [/Directory|d:<value>]
        [/OutputFile|o:<value>] [/ContinueOnErrors|c:<value>] [/help|?|h] [/version|v]
 
 

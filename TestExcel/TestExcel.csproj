@@ -48,7 +48,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="TransactionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -62,9 +62,9 @@
     <None Include="TransactionDefinition.xlsx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ExcelToTransactions\ExcelToTransactions.csproj">
+    <ProjectReference Include="..\ExcelParser\ExcelParser.csproj">
       <Project>{39b1c515-b646-4312-b265-246da5f41e59}</Project>
-      <Name>ExcelToTransactions</Name>
+      <Name>ExcelParser</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

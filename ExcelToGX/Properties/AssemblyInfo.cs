@@ -5,8 +5,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ExcelToBC")]
-[assembly: AssemblyDescription("Allow to convert a transaction specified in Excel to a Genexus Export file ")]
+[assembly: AssemblyTitle("ExcelToGX")]
+[assembly: AssemblyDescription("Allow to convert definitions in Excel to a Genexus Export file")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("GeneXus")]
 [assembly: AssemblyProduct("GeneXusUtilities")]

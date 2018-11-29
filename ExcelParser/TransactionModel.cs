@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Artech.Genexus.Common.Types;
 
-namespace ExcelToTransactions
+namespace ExcelParser
 {
 	public interface ITransactionElement
 	{
