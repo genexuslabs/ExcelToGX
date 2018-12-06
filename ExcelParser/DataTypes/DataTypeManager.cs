@@ -1,17 +1,12 @@
 ﻿using Artech.Common.Helpers.Strings;
 using Artech.Genexus.Common.Types;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ExcelParser.DataTypes
 {
-	public class DataTypeManager
+	public static class DataTypeManager
 	{
-		public static void SetDataType(string text, TransactionAttribute att)
+		public static void SetDataType(string text, DataTypeElement dte)
 		{
 			string normalizedText = text.ToUpper();
 			string [] vals = normalizedText.Split('(');
@@ -26,7 +21,7 @@ namespace ExcelParser.DataTypes
 			}
 			if (typeInfo != null)
 			{
-				att.SetDataType(typeInfo);
+				dte.SetDataType(typeInfo);
 				if (typeInfo.RegularExpression != null)
 				{
 					string fullText = normalizedText.Replace(vals[0], typeInfo.Name.ToUpper());
@@ -38,7 +33,7 @@ namespace ExcelParser.DataTypes
 							if (match.Groups["length"].Length > 0)
 							{
 								if (Format.ParseInteger(match.Groups["length"].Value, out int length))
-									att.Length = length;
+									dte.Length = length;
 							}
 							if (typeInfo.AllowDecimals)
 							{
@@ -50,11 +45,11 @@ namespace ExcelParser.DataTypes
 								else if (text.EndsWith(")"))
 									decimals = 0;
 
-								att.Decimals = decimals;
+								dte.Decimals = decimals;
 							}
 
 							if (typeInfo.AllowSign && match.Groups["sign"].Length > 0)
-								att.Sign = true;
+								dte.Sign = true;
 						}
 					}
 				}

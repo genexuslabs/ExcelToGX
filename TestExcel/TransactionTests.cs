@@ -19,13 +19,13 @@ namespace TestExcel
 			reader.Configuration.LevelIdentifierKeyword = "LVL";
 			reader.Configuration.LevelParentIdColumn = 9;
 			reader.Configuration.LevelIdColumn = 8;
-			reader.Configuration.AttributeDomainColumn = 10;
-			reader.Configuration.AttributeStartRow = 5;
-			reader.Configuration.AttributesStartColumn = 1;
-			reader.Configuration.AttributeNameColumn = 1;
-			reader.Configuration.AttributeDescriptionColumn = 2;
-			reader.Configuration.AttributeDataTypeColumn = 4;
-			reader.Configuration.AttributeDataLengthColumn = 5;
+			reader.Configuration.DomainColumn = 10;
+			reader.Configuration.DataStartRow = 5;
+			reader.Configuration.DataStartColumn = 1;
+			reader.Configuration.DataNameColumn = 1;
+			reader.Configuration.DataDescriptionColumn = 2;
+			reader.Configuration.DataTypeColumn = 4;
+			reader.Configuration.DataLengthColumn = 5;
 			reader.Configuration.AttributeKeyColumn = 3;
 			reader.Configuration.AttributeNullableColumn = 6;
 		}
@@ -37,15 +37,15 @@ namespace TestExcel
 			reader.Configuration.ObjectNameColumn = 12;
 			reader.Configuration.ObjectDescRow = 3;
 			reader.Configuration.ObjectDescColumn = 13;
-			reader.Configuration.AttributeStartRow = 6;
-			reader.Configuration.AttributesStartColumn = 2;
+			reader.Configuration.DataStartRow = 6;
+			reader.Configuration.DataStartColumn = 2;
 			reader.Configuration.AttributeKeyColumn = 7;
 			reader.Configuration.PKValue = "PK";
-			reader.Configuration.AttributeNameColumn = 5;
-			reader.Configuration.AttributeDescriptionColumn = 6;
-			reader.Configuration.AttributeDomainColumn = 8;
-			reader.Configuration.AttributeDataTypeColumn = 9;
-			reader.Configuration.AttributeDataLengthColumn = 10;
+			reader.Configuration.DataNameColumn = 5;
+			reader.Configuration.DataDescriptionColumn = 6;
+			reader.Configuration.DomainColumn = 8;
+			reader.Configuration.DataTypeColumn = 9;
+			reader.Configuration.DataLengthColumn = 10;
 			reader.Configuration.AttributeNullableColumn = 11;
 			reader.Configuration.NullableValue = "Y";
 			reader.Configuration.LevelCheckColumn = 3;
@@ -86,43 +86,43 @@ namespace TestExcel
 		[TestMethod]
 		public void SetTypes()
 		{
-			TransactionAttribute att = new TransactionAttribute();
+			DataTypeElement dte = new DataTypeElement();
 
-			DataTypeManager.SetDataType("Numeric(8.2)", att);
-			Assert.IsTrue(att.Type == "Numeric" && att.Length == 8 && att.Decimals == 2 && att.Sign == false);
+			DataTypeManager.SetDataType("Numeric(8.2)", dte);
+			Assert.IsTrue(dte.Type == "Numeric" && dte.Length == 8 && dte.Decimals == 2 && dte.Sign == false);
 
-			DataTypeManager.SetDataType("Num(8.2)", att);
-			Assert.IsTrue(att.Type == "Numeric" && att.Length == 8 && att.Decimals == 2 && att.Sign == false);
+			DataTypeManager.SetDataType("Num(8.2)", dte);
+			Assert.IsTrue(dte.Type == "Numeric" && dte.Length == 8 && dte.Decimals == 2 && dte.Sign == false);
 
-			DataTypeManager.SetDataType("Num(8)", att);
-			Assert.IsTrue(att.Type == "Numeric" && att.Length == 8 && att.Decimals == 0 && att.Sign == false);
+			DataTypeManager.SetDataType("Num(8)", dte);
+			Assert.IsTrue(dte.Type == "Numeric" && dte.Length == 8 && dte.Decimals == 0 && dte.Sign == false);
 
-			DataTypeManager.SetDataType("Num(8-)", att);
-			Assert.IsTrue(att.Type == "Numeric" && att.Length == 8 && att.Decimals == 0 && att.Sign == true);
+			DataTypeManager.SetDataType("Num(8-)", dte);
+			Assert.IsTrue(dte.Type == "Numeric" && dte.Length == 8 && dte.Decimals == 0 && dte.Sign == true);
 
-			DataTypeManager.SetDataType("Num(12.4-)", att);
-			Assert.IsTrue(att.Type == "Numeric" && att.Length == 12 && att.Decimals == 4 && att.Sign == true);
+			DataTypeManager.SetDataType("Num(12.4-)", dte);
+			Assert.IsTrue(dte.Type == "Numeric" && dte.Length == 12 && dte.Decimals == 4 && dte.Sign == true);
 
-			DataTypeManager.SetDataType("DateTime(12.4-)", att);
-			Assert.IsTrue(att.Type == "DateTime" && att.Length == null && att.Decimals == null && att.Sign == null);
+			DataTypeManager.SetDataType("DateTime(12.4-)", dte);
+			Assert.IsTrue(dte.Type == "DateTime" && dte.Length == null && dte.Decimals == null && dte.Sign == null);
 
-			DataTypeManager.SetDataType("DateTime", att);
-			Assert.IsTrue(att.Type == "DateTime" && att.Length == null && att.Decimals == null && att.Sign == null);
+			DataTypeManager.SetDataType("DateTime", dte);
+			Assert.IsTrue(dte.Type == "DateTime" && dte.Length == null && dte.Decimals == null && dte.Sign == null);
 
-			DataTypeManager.SetDataType("Video", att);
-			Assert.IsTrue(att.Type == "Video" && att.Length == null && att.Decimals == null && att.Sign == null);
+			DataTypeManager.SetDataType("Video", dte);
+			Assert.IsTrue(dte.Type == "Video" && dte.Length == null && dte.Decimals == null && dte.Sign == null);
 
-			DataTypeManager.SetDataType("VIDEO", att);
-			Assert.IsTrue(att.Type == "Video" && att.Length == null && att.Decimals == null && att.Sign == null);
+			DataTypeManager.SetDataType("VIDEO", dte);
+			Assert.IsTrue(dte.Type == "Video" && dte.Length == null && dte.Decimals == null && dte.Sign == null);
 
-			DataTypeManager.SetDataType("Char(20.2)", att);
-			Assert.IsTrue(att.Type == "Character" && att.Length == 20 && att.Decimals == null && att.Sign == null);
+			DataTypeManager.SetDataType("Char(20.2)", dte);
+			Assert.IsTrue(dte.Type == "Character" && dte.Length == 20 && dte.Decimals == null && dte.Sign == null);
 
-			DataTypeManager.SetDataType("VarChar(200)", att);
-			Assert.IsTrue(att.Type == "VarChar" && att.Length == 200 && att.Decimals == null && att.Sign == null);
+			DataTypeManager.SetDataType("VarChar(200)", dte);
+			Assert.IsTrue(dte.Type == "VarChar" && dte.Length == 200 && dte.Decimals == null && dte.Sign == null);
 
-			DataTypeManager.SetDataType("VarChar()", att);
-			Assert.IsTrue(att.Type == "VarChar" && att.Length == 200 && att.Decimals == null && att.Sign == null);
+			DataTypeManager.SetDataType("VarChar()", dte);
+			Assert.IsTrue(dte.Type == "VarChar" && dte.Length == 200 && dte.Decimals == null && dte.Sign == null);
 
 
 			//DataTypeManager.SetDataType("Num(8.2)", att);

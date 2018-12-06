@@ -85,53 +85,38 @@ The Configuration File should be
   </startup>
   <applicationSettings>
     <ExcelToGX.Properties.Settings>
-      <setting name="ObjectNameRow" serializeAs="String">
-        <value>3</value>
+      <setting name="DataStartRow" serializeAs="String">
+        <value>5</value>
       </setting>
-      <setting name="ObjectNameColumn" serializeAs="String">
-        <value>7</value>
+      <setting name="DataStartColumn" serializeAs="String">
+        <value>1</value>
       </setting>
-      <setting name="ObjectDescRow" serializeAs="String">
-        <value>3</value>
+      <setting name="DataNameColumn" serializeAs="String">
+        <value>1</value>
       </setting>
-      <setting name="ObjectDescColumn" serializeAs="String">
-        <value>11</value>
-      </setting>
-      <setting name="AttributeStartRow" serializeAs="String">
-        <value>7</value>
-      </setting>
-      <setting name="AttributeStartColumn" serializeAs="String">
+      <setting name="DataDescriptionColumn" serializeAs="String">
         <value>2</value>
       </setting>
-      <setting name="AttributeNameColumn" serializeAs="String">
-        <value>7</value>
-      </setting>
-      <setting name="AttributeDescriptionColumn" serializeAs="String">
-        <value>6</value>
-      </setting>
       <setting name="AttributeNullableColumn" serializeAs="String">
-        <value>4</value>
+        <value>6</value>
       </setting>
       <setting name="AttributeKeyColumn" serializeAs="String">
         <value>3</value>
       </setting>
-      <setting name="AttributeDataTypeColumn" serializeAs="String">
-        <value>8</value>
-      </setting>
-      <setting name="DefinitionSheetName" serializeAs="String">
-        <value>てすと</value>
+      <setting name="DataTypeColumn" serializeAs="String">
+        <value>4</value>
       </setting>
       <setting name="LevelCheckColumn" serializeAs="String">
         <value>3</value>
       </setting>
       <setting name="LevelIdColumn" serializeAs="String">
-        <value>2</value>
+        <value>8</value>
       </setting>
       <setting name="LevelParentIdColumn" serializeAs="String">
-        <value>7</value>
+        <value>9</value>
       </setting>
       <setting name="LevelIdentifierKeyword" serializeAs="String">
-        <value> レベル1</value>
+        <value>LVL</value>
       </setting>
       <setting name="PKValue" serializeAs="String">
         <value>PK</value>
@@ -141,6 +126,24 @@ The Configuration File should be
       </setting>
       <setting name="DomainColumn" serializeAs="String">
         <value>10</value>
+      </setting>
+      <setting name="DataLengthColumn" serializeAs="String">
+        <value>5</value>
+      </setting>
+      <setting name="ObjectNameRow" serializeAs="String">
+        <value>2</value>
+      </setting>
+      <setting name="ObjectNameColumn" serializeAs="String">
+        <value>1</value>
+      </setting>
+      <setting name="ObjectDescRow" serializeAs="String">
+        <value>2</value>
+      </setting>
+      <setting name="ObjectDescColumn" serializeAs="String">
+        <value>2</value>
+      </setting>
+      <setting name="DefinitionSheetName" serializeAs="String">
+        <value>TransactionDefinitionSheet</value>
       </setting>
     </ExcelToGX.Properties.Settings>
   </applicationSettings>
@@ -167,8 +170,11 @@ Usage: ExcelToGX.exe [@argfile] [/ExcelFile|x:<value>] [/Directory|d:<value>]
 /OutputFile:<value>        The relative or full path to the output file, the
                            output is in xml format (Default is
                            "Transaction.xml")
-/ContinueOnErrors:<value>  Specify if the the tool must continue converting
-                           even errors are detected  (Default is "False")
+/ContinueOnErrors:<value>  Specify if the tool must continue converting
+                           after errors are detected (Default is "False")
+/Type:<value>              Specify the type of worksheet to parse.
+                           Values: TRN | SDT
+                           (Default is "TRN")
 /help                      Show usage.
 /version                   Show version.
 ```

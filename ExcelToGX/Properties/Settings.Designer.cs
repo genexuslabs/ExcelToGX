@@ -25,43 +25,43 @@ namespace ExcelToGX.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("7")]
-        public int AttributeStartRow {
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int DataStartRow {
             get {
-                return ((int)(this["AttributeStartRow"]));
+                return ((int)(this["DataStartRow"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int DataStartColumn {
+            get {
+                return ((int)(this["DataStartColumn"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int DataNameColumn {
+            get {
+                return ((int)(this["DataNameColumn"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("2")]
-        public int AttributeStartColumn {
+        public int DataDescriptionColumn {
             get {
-                return ((int)(this["AttributeStartColumn"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("7")]
-        public int AttributeNameColumn {
-            get {
-                return ((int)(this["AttributeNameColumn"]));
+                return ((int)(this["DataDescriptionColumn"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("6")]
-        public int AttributeDescriptionColumn {
-            get {
-                return ((int)(this["AttributeDescriptionColumn"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4")]
         public int AttributeNullableColumn {
             get {
                 return ((int)(this["AttributeNullableColumn"]));
@@ -79,10 +79,10 @@ namespace ExcelToGX.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("8")]
-        public int AttributeDataTypeColumn {
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
+        public int DataTypeColumn {
             get {
-                return ((int)(this["AttributeDataTypeColumn"]));
+                return ((int)(this["DataTypeColumn"]));
             }
         }
         
@@ -97,7 +97,7 @@ namespace ExcelToGX.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("8")]
         public int LevelIdColumn {
             get {
                 return ((int)(this["LevelIdColumn"]));
@@ -106,7 +106,7 @@ namespace ExcelToGX.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("7")]
+        [global::System.Configuration.DefaultSettingValueAttribute("9")]
         public int LevelParentIdColumn {
             get {
                 return ((int)(this["LevelParentIdColumn"]));
@@ -115,7 +115,7 @@ namespace ExcelToGX.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(" レベル1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("LVL")]
         public string LevelIdentifierKeyword {
             get {
                 return ((string)(this["LevelIdentifierKeyword"]));
@@ -151,16 +151,16 @@ namespace ExcelToGX.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("9")]
-        public int AttributeDataLengthColumn {
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int DataLengthColumn {
             get {
-                return ((int)(this["AttributeDataLengthColumn"]));
+                return ((int)(this["DataLengthColumn"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
         public int ObjectNameRow {
             get {
                 return ((int)(this["ObjectNameRow"]));
@@ -169,7 +169,7 @@ namespace ExcelToGX.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("7")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public int ObjectNameColumn {
             get {
                 return ((int)(this["ObjectNameColumn"]));
@@ -178,7 +178,7 @@ namespace ExcelToGX.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
         public int ObjectDescRow {
             get {
                 return ((int)(this["ObjectDescRow"]));
@@ -187,7 +187,7 @@ namespace ExcelToGX.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("11")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
         public int ObjectDescColumn {
             get {
                 return ((int)(this["ObjectDescColumn"]));
@@ -196,10 +196,37 @@ namespace ExcelToGX.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("てすと")]
+        [global::System.Configuration.DefaultSettingValueAttribute("TransactionDefinitionSheet")]
         public string DefinitionSheetName {
             get {
                 return ((string)(this["DefinitionSheetName"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public int ItemIsCollectionColumn {
+            get {
+                return ((int)(this["ItemIsCollectionColumn"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Y")]
+        public string CollectionIdentifierKeyword {
+            get {
+                return ((string)(this["CollectionIdentifierKeyword"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("11")]
+        public int CollectionItemNameColumn {
+            get {
+                return ((int)(this["CollectionItemNameColumn"]));
             }
         }
     }

@@ -2,38 +2,38 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ExcelToGX.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="AttributeStartRow" Type="System.Int32" Scope="Application">
-      <Value Profile="(Default)">7</Value>
+    <Setting Name="DataStartRow" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">5</Value>
     </Setting>
-    <Setting Name="AttributeStartColumn" Type="System.Int32" Scope="Application">
+    <Setting Name="DataStartColumn" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="DataNameColumn" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="DataDescriptionColumn" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">2</Value>
     </Setting>
-    <Setting Name="AttributeNameColumn" Type="System.Int32" Scope="Application">
-      <Value Profile="(Default)">7</Value>
-    </Setting>
-    <Setting Name="AttributeDescriptionColumn" Type="System.Int32" Scope="Application">
-      <Value Profile="(Default)">6</Value>
-    </Setting>
     <Setting Name="AttributeNullableColumn" Type="System.Int32" Scope="Application">
-      <Value Profile="(Default)">4</Value>
+      <Value Profile="(Default)">6</Value>
     </Setting>
     <Setting Name="AttributeKeyColumn" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">3</Value>
     </Setting>
-    <Setting Name="AttributeDataTypeColumn" Type="System.Int32" Scope="Application">
-      <Value Profile="(Default)">8</Value>
+    <Setting Name="DataTypeColumn" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">4</Value>
     </Setting>
     <Setting Name="LevelCheckColumn" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">3</Value>
     </Setting>
     <Setting Name="LevelIdColumn" Type="System.Int32" Scope="Application">
-      <Value Profile="(Default)">2</Value>
+      <Value Profile="(Default)">8</Value>
     </Setting>
     <Setting Name="LevelParentIdColumn" Type="System.Int32" Scope="Application">
-      <Value Profile="(Default)">7</Value>
+      <Value Profile="(Default)">9</Value>
     </Setting>
     <Setting Name="LevelIdentifierKeyword" Type="System.String" Scope="Application">
-      <Value Profile="(Default)"> レベル1</Value>
+      <Value Profile="(Default)">LVL</Value>
     </Setting>
     <Setting Name="PKValue" Type="System.String" Scope="Application">
       <Value Profile="(Default)">PK</Value>
@@ -44,23 +44,32 @@
     <Setting Name="DomainColumn" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">10</Value>
     </Setting>
-    <Setting Name="AttributeDataLengthColumn" Type="System.Int32" Scope="Application">
-      <Value Profile="(Default)">9</Value>
+    <Setting Name="DataLengthColumn" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">5</Value>
     </Setting>
     <Setting Name="ObjectNameRow" Type="System.Int32" Scope="Application">
-      <Value Profile="(Default)">3</Value>
+      <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="ObjectNameColumn" Type="System.Int32" Scope="Application">
-      <Value Profile="(Default)">7</Value>
+      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="ObjectDescRow" Type="System.Int32" Scope="Application">
-      <Value Profile="(Default)">3</Value>
+      <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="ObjectDescColumn" Type="System.Int32" Scope="Application">
-      <Value Profile="(Default)">11</Value>
+      <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="DefinitionSheetName" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">てすと</Value>
+      <Value Profile="(Default)">TransactionDefinitionSheet</Value>
+    </Setting>
+    <Setting Name="ItemIsCollectionColumn" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="CollectionIdentifierKeyword" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Y</Value>
+    </Setting>
+    <Setting Name="CollectionItemNameColumn" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">11</Value>
     </Setting>
   </Settings>
 </SettingsFile>
