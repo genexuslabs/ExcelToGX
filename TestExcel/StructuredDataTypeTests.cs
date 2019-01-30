@@ -44,5 +44,15 @@ namespace TestExcel
 			reader.ReadExcel(new string[] { Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SDT_Test.xlsx") }
 				, Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "sdts.xml"), false);
 		}
+
+		[TestMethod]
+		public void TestReadSDTCollection()
+		{
+			SDTExcelReader reader = new SDTExcelReader();
+			Config(reader);
+			reader.Configuration.DefinitionSheetName = "SDT Definition";
+			reader.ReadExcel(new string[] { Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SDT_Test_LVL.xlsx") }
+				, Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "sdts_col.xml"), false);
+		}
 	}
 }

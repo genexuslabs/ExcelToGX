@@ -70,11 +70,11 @@ namespace ExcelParser
 				{
 					var excel = new ExcelPackage(new FileInfo(fileName));
 					ExcelWorksheet sheet = excel.Workbook.Worksheets[Configuration.DefinitionSheetName];
-					if (sheet == null)
+					if (sheet is null)
 						throw new Exception($"The xlsx file '{fileName}' was opened but it does not have a definition sheet for the object. Please provide the object definition in a Sheet called '{Configuration.DefinitionSheetName}'");
 
 					string objName = sheet.Cells[Configuration.ObjectNameRow, Configuration.ObjectNameColumn].Value?.ToString();
-					if (objName == null)
+					if (objName is null)
 						throw new Exception($"Could not find the object name at [{Configuration.ObjectNameRow} , {Configuration.ObjectNameColumn}]. Please take a look at the configuration file");
 					ProcessFile(sheet, objName);
 				}
@@ -169,37 +169,45 @@ namespace ExcelParser
 
 		private TLevelElement ReadLevel(int row, ExcelWorksheet sheet, TLevelElement level, Dictionary<int, TLevelElement> levels, out bool isLevel)
 		{
-			isLevel = false;
-			if (sheet.Cells[row, Configuration.LevelCheckColumn].Value?.ToString().ToLower().Trim() == Configuration.LevelIdentifierKeyword.ToLower().Trim()) //is a level
+			int id;
+			string idValue = sheet.Cells[row, Configuration.LevelIdColumn].Value?.ToString();
+			if (idValue is null)
+				id = -1;
+			else
 			{
-				isLevel = true;
-				int levelId = 0;
-				int parentId = 0;
-				// Read Level Id
 				try
 				{
-					if (sheet.Cells[row, Configuration.LevelIdColumn].Value != null)
-					{
-						levelId = int.Parse(sheet.Cells[row, Configuration.LevelIdColumn].Value?.ToString());
-					}
-					parentId = GetParentLevelId(sheet, row);
+					id = int.Parse(sheet.Cells[row, Configuration.LevelIdColumn].Value?.ToString());
 				}
 				catch (Exception ex)
 				{
 					throw new Exception($"Invalid identifier for level at {row}, {Configuration.LevelIdColumn} " + ex.Message, ex);
 				}
+			}
+			isLevel = false;
+			if (sheet.Cells[row, Configuration.LevelCheckColumn].Value?.ToString().ToLower().Trim() == Configuration.LevelIdentifierKeyword.ToLower().Trim()) //is a level
+			{
+				isLevel = true;
+
+				if (id == 0)
+					return levels[0];
+
+				int parentId = 0;
+				// Read Level Id
+				parentId = GetParentLevelId(sheet, row);
 				string levelName = sheet.Cells[row, Configuration.DataNameColumn].Value?.ToString();
-				if (levelName == null)
+				if (levelName is null)
 					throw new Exception($"Could not find the Level name at [{row} , {Configuration.DataNameColumn}], please take a look at the configuration file ");
 				string levelDesc = sheet.Cells[row, Configuration.DataDescriptionColumn].Value?.ToString();
+
 				TLevelElement newLevel = new TLevelElement
 				{
 					Name = levelName,
 					Guid = GuidHelper.Create(GuidHelper.IsoOidNamespace, levelName, false).ToString(),
 					Description = levelDesc
 				};
-				Debug.Assert(levelId >= 1);
-				levels[levelId] = newLevel;
+				Debug.Assert(id >= 1);
+				levels[id] = newLevel;
 
 				TLevelElement parentTrn = levels[parentId];
 				parentTrn.Items.Add(newLevel);
@@ -207,6 +215,9 @@ namespace ExcelParser
 			}
 			else
 			{
+				if (id == 0)
+					throw new Exception($"Invalid identifier for item at {row}, {Configuration.LevelIdColumn}. Only the root level element can have id 0 ");
+
 				if (sheet.Cells[row, Configuration.LevelParentIdColumn].Value != null) // Explicit level id
 				{
 					int parentLevel = GetParentLevelId(sheet, row);
@@ -221,23 +232,23 @@ namespace ExcelParser
 		{
 			if (string.IsNullOrEmpty(sheet.Cells[row, Configuration.DataNameColumn].Value?.ToString().Trim()))
 				return null;
-			TLeafElement att = new TLeafElement()
+			TLeafElement leaf = new TLeafElement()
 			{
 				Name = sheet.Cells[row, Configuration.DataNameColumn].Value?.ToString().Trim(),
 				Domain = sheet.Cells[row, Configuration.DomainColumn].Value?.ToString().Trim(),
 				Description = sheet.Cells[row, Configuration.DataDescriptionColumn].Value?.ToString().Trim(),
 				Type = sheet.Cells[row, Configuration.DataTypeColumn].Value?.ToString().Trim().ToLower(),
 			};
-			ReadLeafProperties(att, sheet, row);
-			att.Guid = GuidHelper.Create(GuidHelper.DnsNamespace, att.Name, false).ToString();
+			ReadLeafProperties(leaf, sheet, row);
+			leaf.Guid = GuidHelper.Create(GuidHelper.DnsNamespace, leaf.Name, false).ToString();
 			try
 			{
-				if (att.Domain == null)
+				if (leaf.Domain is null)
 				{
-					DataTypeManager.SetDataType(att.Type, att);
+					DataTypeManager.SetDataType(leaf.Type, leaf);
 					try
 					{
-						SetLengthAndDecimals(sheet, row, att);
+						SetLengthAndDecimals(sheet, row, leaf);
 					}
 					catch (Exception ex) //never fail because a wrong length/decimals definition, just use the defaults values.
 					{
@@ -251,7 +262,7 @@ namespace ExcelParser
 				Console.WriteLine("Error parsing Data Type for row " + row);
 				HandleException(sheet.Name, ex);
 			}
-			return att;
+			return leaf;
 		}
 
 		private void SetLengthAndDecimals(ExcelWorksheet sheet, int row, TLeafElement leaf)
