@@ -62,7 +62,8 @@ g_type(att) ::=<<
   <Property><Name>Length</Name><Value>$att.Length$</Value></Property>$endif$$if (att.Decimals)$
   <Property><Name>Decimals</Name><Value>$att.Decimals$</Value></Property>$endif$$if (att.Sign)$
   <Property><Name>Signed</Name><Value>True</Value></Property>$endif$$if (att.Autonumber)$
-  <Property><Name>AUTONUMBER</Name><Value>True</Value></Property>$endif$
+  <Property><Name>AUTONUMBER</Name><Value>True</Value></Property>$endif$$if (att.IsFormula)$
+  <Property><Name>Formula</Name><Value>$att.EscapeFormula$</Value></Property>$endif$
 
 </Properties>
 >>

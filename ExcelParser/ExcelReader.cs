@@ -28,7 +28,6 @@ namespace ExcelParser
 		Dictionary<string, TLeafElement> Leafs;
 		Dictionary<string, DataTypeElement> Domains;
 
-
 		public abstract class BaseConfiguration
 		{
 			public int ObjectNameRow;

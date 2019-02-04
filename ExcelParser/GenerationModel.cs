@@ -1,9 +1,6 @@
-﻿using System;
+﻿using Artech.Genexus.Common.Types;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Artech.Genexus.Common.Types;
+using System.Security;
 
 namespace ExcelParser
 {
@@ -66,14 +63,14 @@ namespace ExcelParser
 	public class TransactionAttribute : DataTypeElement, ITransactionElement
 	{
 		public bool IsKey { get; set; }
-		public bool Autonumber { get; set; } = false;
+		public bool Autonumber { get; set; }
+		public bool IsFormula { get; set; }
+		public string Formula { get; set; }
 		public bool AllowNull { get; set; }
 		public bool IsAttribute => true;
 
-		public override string ToString()
-		{
-			return $"{Type} {Description}";
-		}
+		public string EscapeFormula => SecurityElement.Escape(Formula).Replace("&apos;", "'");
+		public override string ToString() => $"{Type} {Description}";
 	}
 
 	public interface ISDTElement : IKBElement

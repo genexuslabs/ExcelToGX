@@ -229,5 +229,41 @@ namespace ExcelToGX.Properties {
                 return ((int)(this["CollectionItemNameColumn"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public int FormulaCheckColumn {
+            get {
+                return ((int)(this["FormulaCheckColumn"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("FRM")]
+        public string FormulaIdentifierKeyword {
+            get {
+                return ((string)(this["FormulaIdentifierKeyword"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("7")]
+        public int FormulaColumn {
+            get {
+                return ((int)(this["FormulaColumn"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("7")]
+        public int AttributeAutonumberColumn {
+            get {
+                return ((int)(this["AttributeAutonumberColumn"]));
+            }
+        }
     }
 }

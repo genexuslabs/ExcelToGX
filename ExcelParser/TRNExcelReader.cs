@@ -31,6 +31,10 @@ namespace ExcelParser
 			public int AttributeAutonumberColumn = 12;
 			public string PKValue = "PK";
 			public string NullableValue = "?";
+
+			public int FormulaCheckColumn = 3;
+			public string FormulaIdentifierKeyword = "FRM";
+			public int FormulaColumn = 7;
 		}
 
 		protected override string TemplateFile => "ExportTRNTemplate.stg";
@@ -42,9 +46,17 @@ namespace ExcelParser
 
 		protected override void ReadLeafProperties(TransactionAttribute att, ExcelWorksheet sheet, int row)
 		{
-			att.AllowNull = sheet.Cells[row, Configuration.AttributeNullableColumn].Value?.ToString().ToLower() == Configuration.NullableValue.ToLower();
 			att.IsKey = sheet.Cells[row, Configuration.AttributeKeyColumn].Value?.ToString().ToLower() == Configuration.PKValue.ToLower();
-			att.Autonumber = sheet.Cells[row, Configuration.AttributeAutonumberColumn].Value?.ToString().ToLower() == "true";
+			if (!att.IsKey)
+			{
+				att.IsFormula = sheet.Cells[row, Configuration.FormulaCheckColumn].Value?.ToString().ToLower() == Configuration.FormulaIdentifierKeyword.ToLower();
+				if (att.IsFormula)
+					att.Formula = sheet.Cells[row, Configuration.FormulaColumn].Value?.ToString();
+				else
+					att.AllowNull = sheet.Cells[row, Configuration.AttributeNullableColumn].Value?.ToString().ToLower() == Configuration.NullableValue.ToLower();
+			}
+			if (!att.IsFormula)
+				att.Autonumber = sheet.Cells[row, Configuration.AttributeAutonumberColumn].Value?.ToString().ToLower() == "true";
 		}
 	}
 }
