@@ -64,7 +64,7 @@ namespace Artech.Common.Helpers.Guids
 		public static Guid Create(Guid namespaceId, string name, int version)
 		{
 			if (name == null)
-				throw new ArgumentNullException("name");
+				throw new ArgumentNullException(nameof(name));
 			if (version != 3 && version != 5)
 				throw new ArgumentOutOfRangeException("version", "version must be either 3 or 5.");
 
