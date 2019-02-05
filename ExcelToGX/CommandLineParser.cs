@@ -135,7 +135,6 @@ using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
 
 namespace Artech.Common.Helpers
 {
@@ -1182,11 +1181,6 @@ namespace Artech.Common.Helpers
 			}
 		}
 
-		public static bool IsConsole()
-		{
-			return GetImageSubsystem(GetAssembly().Location) == ImageSubsystem.CUI;
-		}
-
 		#region P/Invoke implemention of IsConsole
 
 		/*
@@ -1251,45 +1245,31 @@ namespace Artech.Common.Helpers
 			return Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();
 		}
 
-		private void Show(string s, MessageBoxIcon icon)
+		private void Show(string s, ConsoleColor color)
 		{
 			// Message in proporcional output, look align.
 
-			if (IsConsole())
-			{
-				// Always send usage to stdout so it's easy to capture the output
-				Console.WriteLine(s);
-			}
-			else
-			{
-				// In  not porporcional output like MessageBox not show align
-				// ToDO fix the align.
-				try
-				{
-					MessageBox.Show(s, GetTitle(), MessageBoxButtons.OK, icon);
-				}
-				catch
-				{
-					MessageBox.Show(s, "Error", MessageBoxButtons.OK, icon);
-				}
-			}
+			// Always send usage to stdout so it's easy to capture the output
+			Console.ForegroundColor = color;
+			Console.WriteLine(s);
+			Console.ResetColor();
 		}
 
 		private bool Continue(string err)
 		{
 			if (version)
 			{
-				Show(GetLogo(), MessageBoxIcon.Information);
+				Show(GetLogo(), ConsoleColor.Cyan);
 				return false;
 			}
 			if (help)
 			{
-				Show(GetUsage(""), MessageBoxIcon.Question);
+				Show(GetUsage(""), ConsoleColor.Magenta);
 				return false;
 			}
 			if ((err.Length > 0) || help)
 			{
-				Show(GetUsage(help ? "" : err), MessageBoxIcon.Error);
+				Show(GetUsage(help ? "" : err), ConsoleColor.Red);
 				return false;
 			}
 
