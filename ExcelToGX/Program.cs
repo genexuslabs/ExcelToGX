@@ -133,7 +133,7 @@ namespace GeneXus.Utilities
 			reader.Configuration.DataTypeColumn = Settings.Default.DataTypeColumn;
 			reader.Configuration.DataLengthColumn = Settings.Default.DataLengthColumn;
 
-			reader.Configuration.DomainColumn = Settings.Default.DomainColumn;
+			reader.Configuration.BaseTypeColumn = Settings.Default.BaseTypeColumn;
 			return true;
 		}
 
@@ -163,6 +163,12 @@ namespace GeneXus.Utilities
 			reader.Configuration.ItemIsCollectionColumn = Settings.Default.ItemIsCollectionColumn;
 			reader.Configuration.CollectionIdentifierKeyword = Settings.Default.CollectionIdentifierKeyword;
 			reader.Configuration.CollectionItemNameColumn = Settings.Default.CollectionItemNameColumn;
+
+			reader.Configuration.DomainPrefixKeyword = Settings.Default.DomainPrefixKeyword;
+			reader.Configuration.AttributePrefixKeyword = Settings.Default.AttributePrefixKeyword;
+			reader.Configuration.SDTPrefixKeyword = Settings.Default.SDTPrefixKeyword;
+			reader.Configuration.DefaultBaseTypePrefixKeyword = Settings.Default.DefaultBaseTypePrefixKeyword;
+
 			return true;
 		}
 	}

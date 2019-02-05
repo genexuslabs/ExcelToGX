@@ -37,7 +37,7 @@ namespace ExcelParser
 		public string Name { get; set; }
 		public string Description { get; set; }
 		public string Type { get; set; }
-		public string Domain { get; set; }
+		public string BaseType { get; set; }
 		public int? Length { get; set; }
 		public int? Decimals { get; set; }
 		public bool? Sign { get; set; }
@@ -85,6 +85,10 @@ namespace ExcelParser
 		public bool IsCollection { get; set; }
 		public string CollectionItemName { get; set; }
 		public bool IsItem => true;
+
+		public string BaseTypeObject { get; set; }
+		public string BaseTypeProperty { get; set; }
+		public string BaseTypePrefix { get; set; }
 	}
 
 	public class SDTLevel : LevelElement<ISDTElement>, ISDTElement

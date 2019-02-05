@@ -23,7 +23,7 @@ namespace TestExcel
 			reader.Configuration.LevelIdentifierKeyword = "LV";
 			reader.Configuration.LevelParentIdColumn = 4;
 			reader.Configuration.LevelIdColumn = 2;
-			reader.Configuration.DomainColumn = 7;
+			reader.Configuration.BaseTypeColumn = 7;
 			reader.Configuration.DataStartRow = 6;
 			reader.Configuration.DataNameColumn = 5;
 			reader.Configuration.DataDescriptionColumn = 6;

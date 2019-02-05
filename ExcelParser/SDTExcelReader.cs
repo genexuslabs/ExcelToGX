@@ -1,4 +1,5 @@
 ﻿using OfficeOpenXml;
+using System;
 
 namespace ExcelParser
 {
@@ -23,6 +24,11 @@ namespace ExcelParser
 			public int ItemIsCollectionColumn = 10;
 			public string CollectionIdentifierKeyword = "Y";
 			public int CollectionItemNameColumn = 11;
+
+			public string DomainPrefixKeyword = "dom";
+			public string AttributePrefixKeyword = "att";
+			public string SDTPrefixKeyword = "sdt";
+			public string DefaultBaseTypePrefixKeyword = "dom";
 		}
 
 		protected override string TemplateFile => "ExportSDTTemplate.stg";
@@ -36,6 +42,44 @@ namespace ExcelParser
 
 		protected override void ReadLeafProperties(SDTItem item, ExcelWorksheet sheet, int row)
 		{
+			string objectName = item.BaseType;
+			if (!string.IsNullOrEmpty(objectName))
+			{
+				string typeName = null;
+				int pos = item.BaseType.IndexOf(':');
+				if (pos > -1)
+				{
+					typeName = objectName.Substring(0, pos);
+					objectName = objectName.Substring(pos + 1);
+					item.BaseType = objectName;
+				}
+
+				if (string.IsNullOrEmpty(typeName))
+					typeName = Configuration.DefaultBaseTypePrefixKeyword;
+
+				string lowerTypeName = typeName.ToLower();
+				item.BaseTypeObject = objectName;
+				if (lowerTypeName == Configuration.SDTPrefixKeyword.ToLower())
+				{
+					item.BaseTypeProperty = "ATTCUSTOMTYPE";
+					item.BaseTypePrefix = "sdt";
+					item.BaseType = null;
+				}
+				else
+				{
+					item.BaseTypeProperty = "idBasedOn";
+					if (lowerTypeName == Configuration.DomainPrefixKeyword.ToLower())
+						item.BaseTypePrefix = "Domain";
+					else if (lowerTypeName == Configuration.AttributePrefixKeyword.ToLower())
+					{
+						item.BaseTypePrefix = "Attribute";
+						item.BaseType = null;
+					}
+					else
+						throw new InvalidOperationException($"The prefix '{typeName}' used in [{row} , {Configuration.DataTypeColumn}] is not defined as an expected type name prefix.");
+				}
+			}
+
 			ReadIsCollection(item, sheet, row);
 		}
 

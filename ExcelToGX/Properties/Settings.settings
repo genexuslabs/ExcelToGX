@@ -41,7 +41,7 @@
     <Setting Name="NullableValue" Type="System.String" Scope="Application">
       <Value Profile="(Default)">〇</Value>
     </Setting>
-    <Setting Name="DomainColumn" Type="System.Int32" Scope="Application">
+    <Setting Name="BaseTypeColumn" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="DataLengthColumn" Type="System.Int32" Scope="Application">
@@ -82,6 +82,18 @@
     </Setting>
     <Setting Name="AttributeAutonumberColumn" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">7</Value>
+    </Setting>
+    <Setting Name="DomainPrefixKeyword" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">dom</Value>
+    </Setting>
+    <Setting Name="AttributePrefixKeyword" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">att</Value>
+    </Setting>
+    <Setting Name="SDTPrefixKeyword" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">sdt</Value>
+    </Setting>
+    <Setting Name="DefaultBaseTypePrefixKeyword" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">dom</Value>
     </Setting>
   </Settings>
 </SettingsFile>

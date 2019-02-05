@@ -56,8 +56,8 @@ g_type(att) ::=<<
 <Properties>
   <Property><Name>Name</Name><Value>$att.Name$</Value></Property>
   <Property><Name>Description</Name><Value>$att.Description$</Value></Property>
-  <Property><Name>IsDefault</Name><Value>False</Value></Property>$if (att.Domain)$
-  <Property><Name>idBasedOn</Name><Value>Domain:$att.Domain$</Value></Property>$else$
+  <Property><Name>IsDefault</Name><Value>False</Value></Property>$if (att.BaseType)$
+  <Property><Name>idBasedOn</Name><Value>Domain:$att.BaseType$</Value></Property>$else$
   <Property><Name>ATTCUSTOMTYPE</Name><Value>$att.Type$</Value></Property>$endif$$if (att.Length)$
   <Property><Name>Length</Name><Value>$att.Length$</Value></Property>$endif$$if (att.Decimals)$
   <Property><Name>Decimals</Name><Value>$att.Decimals$</Value></Property>$endif$$if (att.Sign)$

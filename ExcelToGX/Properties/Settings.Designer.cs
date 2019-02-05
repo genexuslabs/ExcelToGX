@@ -143,9 +143,9 @@ namespace ExcelToGX.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("10")]
-        public int DomainColumn {
+        public int BaseTypeColumn {
             get {
-                return ((int)(this["DomainColumn"]));
+                return ((int)(this["BaseTypeColumn"]));
             }
         }
         
@@ -263,6 +263,42 @@ namespace ExcelToGX.Properties {
         public int AttributeAutonumberColumn {
             get {
                 return ((int)(this["AttributeAutonumberColumn"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("dom")]
+        public string DomainPrefixKeyword {
+            get {
+                return ((string)(this["DomainPrefixKeyword"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("att")]
+        public string AttributePrefixKeyword {
+            get {
+                return ((string)(this["AttributePrefixKeyword"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("sdt")]
+        public string SDTPrefixKeyword {
+            get {
+                return ((string)(this["SDTPrefixKeyword"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("dom")]
+        public string DefaultBaseTypePrefixKeyword {
+            get {
+                return ((string)(this["DefaultBaseTypePrefixKeyword"]));
             }
         }
     }

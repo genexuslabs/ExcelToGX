@@ -19,7 +19,7 @@ namespace TestExcel
 			reader.Configuration.LevelIdentifierKeyword = "LVL";
 			reader.Configuration.LevelParentIdColumn = 9;
 			reader.Configuration.LevelIdColumn = 8;
-			reader.Configuration.DomainColumn = 10;
+			reader.Configuration.BaseTypeColumn = 10;
 			reader.Configuration.DataStartRow = 5;
 			reader.Configuration.DataStartColumn = 1;
 			reader.Configuration.DataNameColumn = 1;
@@ -43,7 +43,7 @@ namespace TestExcel
 			reader.Configuration.PKValue = "PK";
 			reader.Configuration.DataNameColumn = 5;
 			reader.Configuration.DataDescriptionColumn = 6;
-			reader.Configuration.DomainColumn = 8;
+			reader.Configuration.BaseTypeColumn = 8;
 			reader.Configuration.DataTypeColumn = 9;
 			reader.Configuration.DataLengthColumn = 10;
 			reader.Configuration.AttributeNullableColumn = 11;

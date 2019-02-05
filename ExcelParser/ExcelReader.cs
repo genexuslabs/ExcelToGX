@@ -47,7 +47,7 @@ namespace ExcelParser
 			public int DataDescriptionColumn = 6;
 			public int DataTypeColumn = 8;
 			public int DataLengthColumn = 9;
-			public int DomainColumn = 9;
+			public int BaseTypeColumn = 9;
 		}
 
 		public TConfig Configuration { get; } = new TConfig();
@@ -127,12 +127,12 @@ namespace ExcelParser
 					try
 					{
 						TLeafElement leaf = ReadLeaf(sheet, row);
-						if (leaf.Domain != null && leaf.Type != null && !Domains.ContainsKey(leaf.Domain))
+						if (leaf.BaseType != null && leaf.Type != null && !Domains.ContainsKey(leaf.BaseType))
 						{
 							DataTypeElement domain = new DataTypeElement
 							{
-								Name = leaf.Domain,
-								Guid = GuidHelper.Create(GuidHelper.UrlNamespace, leaf.Domain, false).ToString()
+								Name = leaf.BaseType,
+								Guid = GuidHelper.Create(GuidHelper.UrlNamespace, leaf.BaseType, false).ToString()
 							};
 							DataTypeManager.SetDataType(leaf.Type, domain);
 							Domains[domain.Name] = domain;
@@ -234,7 +234,7 @@ namespace ExcelParser
 			TLeafElement leaf = new TLeafElement()
 			{
 				Name = sheet.Cells[row, Configuration.DataNameColumn].Value?.ToString().Trim(),
-				Domain = sheet.Cells[row, Configuration.DomainColumn].Value?.ToString().Trim(),
+				BaseType = sheet.Cells[row, Configuration.BaseTypeColumn].Value?.ToString().Trim(),
 				Description = sheet.Cells[row, Configuration.DataDescriptionColumn].Value?.ToString().Trim(),
 				Type = sheet.Cells[row, Configuration.DataTypeColumn].Value?.ToString().Trim().ToLower(),
 			};
@@ -242,7 +242,7 @@ namespace ExcelParser
 			leaf.Guid = GuidHelper.Create(GuidHelper.DnsNamespace, leaf.Name, false).ToString();
 			try
 			{
-				if (leaf.Domain is null)
+				if (leaf.BaseType is null)
 				{
 					DataTypeManager.SetDataType(leaf.Type, leaf);
 					try
