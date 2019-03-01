@@ -12,14 +12,14 @@ g_structureddatatype_render(levels, leafs, domains) ::=<<
   </KMW>
   <Objects>
 $levels:{ component |
-    <Object guid="$component.Guid$" parentGuid="afa47377-41d5-4ae8-9755-6f53150aa361" user="GeneXus" name="$component.Name$" type="447527b5-9210-4523-898b-5dccb17be60a" description="$component.Description$">
+    <Object guid="$component.Guid$" parentGuid="afa47377-41d5-4ae8-9755-6f53150aa361" name="$component.Name$" type="447527b5-9210-4523-898b-5dccb17be60a" description="$component.Description$">
       <Part type="5c2aa9da-8fc4-4b6b-ae02-8db4fa48976a">
       $g_level(component)$
         <Properties><Property><Name>IsDefault</Name><Value>False</Value></Property></Properties>
       </Part>
     </Object>};separator="\n"$
 $domains:{ domain |
-    <Object user="GeneXus" guid="$domain.Guid$" name="$domain.Name$" type="00972a17-9975-449e-aab1-d26165d51393">
+    <Object guid="$domain.Guid$" name="$domain.Name$" type="00972a17-9975-449e-aab1-d26165d51393">
       <Part type="babf62c5-0111-49e9-a1c3-cc004d90900a">
         <Properties />
       </Part>

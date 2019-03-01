@@ -145,8 +145,11 @@ namespace GeneXus.Utilities
 			reader.Configuration.AttributeKeyColumn = Settings.Default.AttributeKeyColumn;
 			reader.Configuration.AttributeNullableColumn = Settings.Default.AttributeNullableColumn;
 			reader.Configuration.AttributeAutonumberColumn = Settings.Default.AttributeAutonumberColumn;
-			// Values for PK and Nullable
-			reader.Configuration.PKValue = Settings.Default.PKValue;
+            reader.Configuration.AttributeTitleColumn = Settings.Default.AttributeTitleColumn;
+            reader.Configuration.AttributeColumnTitleColumn = Settings.Default.AttributeColumnTitleColumn;
+            reader.Configuration.AttributeContextualTitleColumn = Settings.Default.AttributeContextualTitleColumn;
+            // Values for PK and Nullable
+            reader.Configuration.PKValue = Settings.Default.PKValue;
 			reader.Configuration.NullableValue = Settings.Default.NullableValue;
 			// Formula
 			reader.Configuration.FormulaCheckColumn = Settings.Default.FormulaCheckColumn;

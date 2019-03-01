@@ -70,7 +70,12 @@ namespace ExcelParser
 		public bool IsAttribute => true;
 
 		public string EscapeFormula => SecurityElement.Escape(Formula).Replace("&apos;", "'");
-		public override string ToString() => $"{Type} {Description}";
+
+        public string Title { get; internal set; }
+        public string ColumnTitle { get; internal set; }
+        public string ContextualTitle { get; internal set; }
+
+        public override string ToString() => $"{Type} {Description}";
 	}
 
 	public interface ISDTElement : IKBElement

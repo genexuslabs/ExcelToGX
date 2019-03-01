@@ -25,6 +25,9 @@ namespace ExcelParser
 			public int AttributeAutonumberColumn = 12;
 			public string PKValue = "PK";
 			public string NullableValue = "?";
+            public int AttributeTitleColumn = 11;
+            public int AttributeColumnTitleColumn = 12;
+            public int AttributeContextualTitleColumn = 13;
 
 			public int FormulaCheckColumn = 3;
 			public string FormulaIdentifierKeyword = "FRM";
@@ -51,6 +54,9 @@ namespace ExcelParser
 			}
 			if (!att.IsFormula)
 				att.Autonumber = sheet.Cells[row, Configuration.AttributeAutonumberColumn].Value?.ToString().ToLower() == "true";
-		}
-	}
+            att.Title = sheet.Cells[row, Configuration.AttributeTitleColumn].Value?.ToString();
+            att.ColumnTitle = sheet.Cells[row, Configuration.AttributeColumnTitleColumn].Value?.ToString();
+            att.ContextualTitle = sheet.Cells[row, Configuration.AttributeContextualTitleColumn].Value?.ToString();
+        }
+    }
 }

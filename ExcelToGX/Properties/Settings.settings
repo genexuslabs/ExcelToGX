@@ -95,5 +95,14 @@
     <Setting Name="DefaultBaseTypePrefixKeyword" Type="System.String" Scope="Application">
       <Value Profile="(Default)">dom</Value>
     </Setting>
+    <Setting Name="AttributeTitleColumn" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">11</Value>
+    </Setting>
+    <Setting Name="AttributeColumnTitleColumn" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">12</Value>
+    </Setting>
+    <Setting Name="AttributeContextualTitleColumn" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">13</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

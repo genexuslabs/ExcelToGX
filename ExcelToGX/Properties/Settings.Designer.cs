@@ -301,5 +301,32 @@ namespace ExcelToGX.Properties {
                 return ((string)(this["DefaultBaseTypePrefixKeyword"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("11")]
+        public int AttributeTitleColumn {
+            get {
+                return ((int)(this["AttributeTitleColumn"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("12")]
+        public int AttributeColumnTitleColumn {
+            get {
+                return ((int)(this["AttributeColumnTitleColumn"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("13")]
+        public int AttributeContextualTitleColumn {
+            get {
+                return ((int)(this["AttributeContextualTitleColumn"]));
+            }
+        }
     }
 }
