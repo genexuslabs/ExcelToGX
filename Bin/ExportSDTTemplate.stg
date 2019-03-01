@@ -34,7 +34,7 @@ $domains:{ domain |
 g_level(level) ::=<<
   <Level Name="$level.Name$">
     <LevelInfo guid="$level.Guid$" name="$level.Name$" type="a76e9340-bdb9-445d-8f81-cfd4ddd0b0f3" description="$level.Description$">
-      <Properties><Property><Name>Name</Name><Value>$level.Name$</Value></Property>$g_collection(level)$</Properties>
+      <Properties><Property><Name>Name</Name><Value>$level.Name$</Value></Property>$if (level.Description)$<Property><Name>Description</Name><Value>$level.Description$</Value></Property>$endif$$g_collection(level)$</Properties>
     </LevelInfo>
   $level.Items:{ item | $if (item.IsItem)$$g_item(item)$$else$$g_level(item)$$endif$ };separator="\n"$
   </Level>
