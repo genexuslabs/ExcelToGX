@@ -12,10 +12,13 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ExportSDTTemplate.stg">
+    <None Update="ExportSDTTemplate.stg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ExportTRNTemplate.stg">
+    <None Update="ExportTRNTemplate.stg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ExportGRPTemplate.stg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

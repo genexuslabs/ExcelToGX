@@ -3,9 +3,9 @@ using System;
 
 namespace ExcelParser
 {
-	public class SDTExcelReader : ExcelReader<SDTExcelReader.SDTConfiguration, ISDTElement, SDTItem, SDTLevel>
+	public class SDTExcelReader : DataExcelReader<SDTExcelReader.SDTConfiguration, ISDTElement, SDTItem, SDTLevel>
 	{
-		public class SDTConfiguration : BaseConfiguration
+		public class SDTConfiguration : BaseDataConfiguration
 		{
 			public SDTConfiguration()
 			{

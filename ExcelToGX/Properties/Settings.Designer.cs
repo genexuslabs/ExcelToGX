@@ -328,5 +328,14 @@ namespace ExcelToGX.Properties {
                 return ((int)(this["AttributeContextualTitleColumn"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public int SupertypeColumn {
+            get {
+                return ((int)(this["SupertypeColumn"]));
+            }
+        }
     }
 }

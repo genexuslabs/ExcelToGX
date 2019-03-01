@@ -1,0 +1,42 @@
+﻿group ExportGenerator;
+
+delimiters "$", "$"
+
+g_subtypegroup_render(groups, attributes) ::=<<
+
+<?xml version="1.0" encoding="utf-8"?>
+<ExportFile>
+  <KMW>
+    <MajorVersion>4</MajorVersion>
+    <MinorVersion>0</MinorVersion>
+    <Build>124546</Build>
+  </KMW>
+  <Objects>
+$groups:{ group |
+    <Object guid="$group.Guid$" parentGuid="afa47377-41d5-4ae8-9755-6f53150aa361" name="$group.Name$" type="87313f43-5eb2-41d7-9b8c-e8d9f5bf9588" description="$group.Description$">
+      <Part type="74203da2-41b1-402c-0001-d8d564a2c2fa">
+$group.Items:{ subtype |
+        <Subtype guid="$subtype.Guid$">
+          <Name>$subtype.Name$</Name>
+          <Supertype>$subtype.Supertype$</Supertype>
+        </Subtype>};separator="\n"$
+        <Properties><Property><Name>IsDefault</Name><Value>False</Value></Property></Properties>
+      </Part>
+      <Properties><Property><Name>Name</Name><Value>$group.Name$</Value></Property>$if (group.Description)$<Property><Name>Description</Name><Value>$group.Description$</Value></Property>$endif$<Property><Name>IsDefault</Name><Value>False</Value></Property></Properties>
+    </Object>};separator="\n"$
+  </Objects>
+  <Attributes>
+    $attributes:{ att | $g_attribute(att)$ };separator="\n"$
+  </Attributes>
+</ExportFile>
+>>
+
+g_attribute(att) ::=<<
+<Attribute guid="$att.Guid$" name="$att.Name$" description="$att.Description$">
+  <Properties>
+    <Property><Name>Name</Name><Value>$att.Name$</Value></Property>
+    <Property><Name>Description</Name><Value>$att.Description$</Value></Property>
+    <Property><Name>IsDefault</Name><Value>False</Value></Property>
+  </Properties>
+</Attribute>
+>>

@@ -104,5 +104,8 @@
     <Setting Name="AttributeContextualTitleColumn" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">13</Value>
     </Setting>
+    <Setting Name="SupertypeColumn" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

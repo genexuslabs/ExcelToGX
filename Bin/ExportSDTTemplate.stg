@@ -17,6 +17,7 @@ $levels:{ component |
       $g_level(component)$
         <Properties><Property><Name>IsDefault</Name><Value>False</Value></Property></Properties>
       </Part>
+      <Properties><Property><Name>Name</Name><Value>$component.Name$</Value></Property>$if (component.Description)$<Property><Name>Description</Name><Value>$component.Description$</Value></Property>$endif$<Property><Name>IsDefault</Name><Value>False</Value></Property></Properties>
     </Object>};separator="\n"$
 $domains:{ domain |
     <Object guid="$domain.Guid$" name="$domain.Name$" type="00972a17-9975-449e-aab1-d26165d51393">

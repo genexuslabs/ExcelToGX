@@ -2,9 +2,9 @@
 
 namespace ExcelParser
 {
-	public class TRNExcelReader : ExcelReader<TRNExcelReader.TRNConfiguration, ITransactionElement, TransactionAttribute, TransactionLevel>
+	public class TRNExcelReader : DataExcelReader<TRNExcelReader.TRNConfiguration, ITransactionElement, TransactionAttribute, TransactionLevel>
 	{
-		public class TRNConfiguration : BaseConfiguration
+		public class TRNConfiguration : BaseDataConfiguration
 		{
 			public TRNConfiguration()
 			{
