@@ -71,6 +71,7 @@ namespace ExcelParser
                                 Guid = GuidHelper.Create(GuidHelper.UrlNamespace, leaf.BaseType, false).ToString()
                             };
                             DataTypeManager.SetDataType(leaf.Type, domain);
+                            SetLengthAndDecimals(sheet, row, domain);
                             Domains[domain.Name] = domain;
                         }
                         if (leaf != null)
@@ -182,15 +183,7 @@ namespace ExcelParser
                 if (leaf.BaseType is null)
                 {
                     DataTypeManager.SetDataType(leaf.Type, leaf);
-                    try
-                    {
-                        SetLengthAndDecimals(sheet, row, leaf);
-                    }
-                    catch (Exception ex) //never fail because a wrong length/decimals definition, just use the defaults values.
-                    {
-                        Console.WriteLine("Error parsing Data Type for row " + row);
-                        HandleException(sheet.Name, ex);
-                    }
+                    SetLengthAndDecimals(sheet, row, leaf);
                 }
             }
             catch (Exception ex)
@@ -201,29 +194,37 @@ namespace ExcelParser
             return leaf;
         }
 
-        private void SetLengthAndDecimals(ExcelWorksheet sheet, int row, TLeafElement leaf)
+        private void SetLengthAndDecimals(ExcelWorksheet sheet, int row, DataTypeElement dte)
         {
-            string lenAndDecimals = sheet.Cells[row, Configuration.DataLengthColumn].Value?.ToString().Trim();
-            if (!string.IsNullOrEmpty(lenAndDecimals))
+            try
             {
-                if (lenAndDecimals.Length > 0 && lenAndDecimals.EndsWith("-"))
+                string lenAndDecimals = sheet.Cells[row, Configuration.DataLengthColumn].Value?.ToString().Trim();
+                if (!string.IsNullOrEmpty(lenAndDecimals))
                 {
-                    leaf.Sign = true;
-                    lenAndDecimals = lenAndDecimals.Replace("-", "");
+                    if (lenAndDecimals.Length > 0 && lenAndDecimals.EndsWith("-"))
+                    {
+                        dte.Sign = true;
+                        lenAndDecimals = lenAndDecimals.Replace("-", "");
+                    }
+                    string[] splitedData;
+                    if (lenAndDecimals.Contains("."))
+                        splitedData = lenAndDecimals.Trim().Split('.');
+                    else
+                        splitedData = lenAndDecimals.Trim().Split(',');
+                    if (splitedData.Length >= 1 && int.TryParse(splitedData[0], out int length))
+                    {
+                        dte.Length = length;
+                    }
+                    if (splitedData.Length == 2 && int.TryParse(splitedData[1], out int decimals))
+                    {
+                        dte.Decimals = decimals;
+                    }
                 }
-                string[] splitedData;
-                if (lenAndDecimals.Contains("."))
-                    splitedData = lenAndDecimals.Trim().Split('.');
-                else
-                    splitedData = lenAndDecimals.Trim().Split(',');
-                if (splitedData.Length >= 1 && int.TryParse(splitedData[0], out int length))
-                {
-                    leaf.Length = length;
-                }
-                if (splitedData.Length == 2 && int.TryParse(splitedData[1], out int decimals))
-                {
-                    leaf.Decimals = decimals;
-                }
+            }
+            catch (Exception ex) //never fail because a wrong length/decimals definition, just use the defaults values.
+            {
+                Console.WriteLine("Error parsing Data Type for row " + row);
+                HandleException(sheet.Name, ex);
             }
         }
 
