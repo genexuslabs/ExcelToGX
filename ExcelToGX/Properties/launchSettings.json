@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ExcelToGX": {
+      "commandName": "Project",
+      "commandLineArgs": "/t:SDT /x:\"\\\\Mac\\Home\\Documents\\GitHub\\ExcelToGX\\TestExcel\\bin\\Debug\\SDT_Test_JP.xlsx\""
+    }
+  }
+}
