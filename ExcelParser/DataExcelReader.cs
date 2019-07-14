@@ -180,7 +180,7 @@ namespace ExcelParser
             ReadLeafProperties(leaf, sheet, row);
             try
             {
-                if (leaf.BaseType is null)
+                if (leaf.BaseType is null && !string.IsNullOrEmpty(leaf.Type))
                 {
                     DataTypeManager.SetDataType(leaf.Type, leaf);
                     SetLengthAndDecimals(sheet, row, leaf);
