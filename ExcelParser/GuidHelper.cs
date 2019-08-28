@@ -7,38 +7,6 @@ namespace Artech.Common.Helpers.Guids
 {
 	public static class GuidHelper
 	{
-		public static bool TryParse(string input, out Guid parsed)
-		{
-			parsed = Guid.Empty;
-			try
-			{
-				parsed = new Guid(input);
-
-				return true;
-			}
-			catch { return false; }
-		}
-
-		public static Guid Parse(string input)
-		{
-			return new Guid(input);
-		}
-
-		public static Guid XOR(Guid guid1, Guid guid2)
-		{
-			var bytes1 = guid1.ToByteArray();
-			var bytes2 = guid2.ToByteArray();
-			return new Guid((from i in Enumerable.Range(0, bytes1.Length)
-							 select (byte)(bytes1[i] ^ bytes2[i])).ToArray());
-		}
-
-		public static string Stringify(this Guid guid)
-		{
-			return guid.ToString().ToUpper().Replace("-", "");
-		}
-
-		/// Following code was taken from: https://github.com/LogosBible/Logos.Utility/blob/master/src/Logos.Utility/GuidUtility.cs via http://stackoverflow.com/questions/2642141/how-to-create-deterministic-guids
-
 		/// <summary>
 		/// Creates a name-based UUID using the algorithm from RFC 4122 §4.3.
 		/// </summary>
@@ -100,20 +68,36 @@ namespace Artech.Common.Helpers.Guids
 			return new Guid(newGuid);
 		}
 
-		/// <summary>
-		/// The namespace for fully-qualified domain names (from RFC 4122, Appendix C).
-		/// </summary>
-		public static readonly Guid DnsNamespace = new Guid("6ba7b810-9dad-11d1-80b4-00c04fd430c8");
+		public static class LegacyGuids
+		{
+			/// <summary>
+			/// The namespace for fully-qualified domain names (from RFC 4122, Appendix C).
+			/// </summary>
+			public static readonly Guid DnsNamespace = new Guid("6ba7b810-9dad-11d1-80b4-00c04fd430c8");
 
-		/// <summary>
-		/// The namespace for URLs (from RFC 4122, Appendix C).
-		/// </summary>
-		public static readonly Guid UrlNamespace = new Guid("6ba7b811-9dad-11d1-80b4-00c04fd430c8");
+			/// <summary>
+			/// The namespace for URLs (from RFC 4122, Appendix C).
+			/// </summary>
+			public static readonly Guid UrlNamespace = new Guid("6ba7b811-9dad-11d1-80b4-00c04fd430c8");
 
-		/// <summary>
-		/// The namespace for ISO OIDs (from RFC 4122, Appendix C).
-		/// </summary>
-		public static readonly Guid IsoOidNamespace = new Guid("6ba7b812-9dad-11d1-80b4-00c04fd430c8");
+			/// <summary>
+			/// The namespace for ISO OIDs (from RFC 4122, Appendix C).
+			/// </summary>
+			public static readonly Guid IsoOidNamespace = new Guid("6ba7b812-9dad-11d1-80b4-00c04fd430c8");
+		}
+
+
+		public static class ObjClass
+		{
+			public static readonly Guid Attribute = new Guid("CD674C4C-0C4A-4522-83EE-11E3C901F37E");
+			public static readonly Guid Transaction = new Guid("726355E0-FCE5-41F8-B065-4276926FA2DF");
+			public static readonly Guid Domain = new Guid("E0BB99FE-8E40-469B-972A-6B4BEC10EA3C");
+			public static readonly Guid SubtypeGroup = new Guid("5D81915E-03D5-4B7B-8905-E9812A386EB6");
+			public static readonly Guid TransactionLevel = new Guid("F5E4647E-F1B0-4923-AD79-9B5D1D7807FF");
+			public static readonly Guid SDT = new Guid("73653410-E730-4AAC-9B2C-9809612E6A37");
+			public static readonly Guid SDTItem = new Guid("A3A673FB-5084-46A2-AC53-CB31B382E082");
+			public static readonly Guid SDTLevel = new Guid("6040CA53-BF06-4B93-9981-EDE860DBBA61");
+		}
 
 		// Converts a GUID (expressed as a byte array) to/from network order (MSB-first).
 		private static void SwapByteOrder(byte[] guid)
