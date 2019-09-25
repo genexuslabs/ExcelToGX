@@ -12,7 +12,7 @@ namespace ExcelParser
 		where TConfig : DataExcelReader<TConfig, IType, TLeafElement, TLevelElement>.BaseDataConfiguration, new()
 		where IType : IKBElement
 		where TLeafElement : DataTypeElement, IType, new()
-		where TLevelElement : LevelElement<IType>, IType, new()
+		where TLevelElement : LevelElement<IType>, IType
 	{
 		Dictionary<string, TLevelElement> Levels;
 		Dictionary<string, TLeafElement> Leafs;
@@ -20,6 +20,12 @@ namespace ExcelParser
 
 		protected abstract Guid LevelTypeGuid { get; }
 		protected abstract Guid LeafTypeGuid { get; }
+
+		protected virtual bool UseParentKeyInLeafGuid => true;
+
+		protected abstract TLevelElement CreateLevelElement(string name, Guid guid, string description, string parentKeyPath);
+
+		protected override TLevelElement CreateObject(string name, Guid guid, string description) => CreateLevelElement(name, guid, description, null);
 
 		public abstract class BaseDataConfiguration : BaseConfiguration
 		{
@@ -65,7 +71,7 @@ namespace ExcelParser
 				{
 					try
 					{
-						TLeafElement leaf = ReadLeaf(sheet, row);
+						TLeafElement leaf = ReadLeaf(sheet, row, level.KeyPath);
 						if (leaf.BaseType != null && leaf.Type != null && !Domains.ContainsKey(leaf.BaseType))
 						{
 							DataTypeElement domain = new DataTypeElement
@@ -79,8 +85,8 @@ namespace ExcelParser
 						}
 						if (leaf != null)
 						{
-							if (Leafs.ContainsKey(leaf.Name) && leaf.ToString() != Leafs[leaf.Name].ToString())
-								Console.WriteLine($"{leaf.Name} was already defined with a different data type {Leafs[leaf.Name].ToString()}, taking into account the last one {leaf.ToString()}");
+							if (Leafs.TryGetValue(leaf.Name, out var other) && leaf.ToString() != other.ToString())
+								Console.WriteLine($"{leaf.Name} was already defined with a different data type {other.ToString()}, taking into account the last one {leaf.ToString()}");
 							Leafs[leaf.Name] = leaf;
 							atts++;
 							level.Items.Add(leaf);
@@ -139,17 +145,17 @@ namespace ExcelParser
 					throw new Exception($"Could not find the Level name at [{row} , {Configuration.DataNameColumn}], please take a look at the configuration file ");
 				string levelDesc = sheet.Cells[row, Configuration.DataDescriptionColumn].Value?.ToString();
 
-				TLevelElement newLevel = new TLevelElement
-				{
-					Name = levelName,
-					Guid = GuidHelper.Create(Configuration.Guid_CompatibilityMode ? GuidHelper.LegacyGuids.IsoOidNamespace : LevelTypeGuid, levelName, false).ToString(),
-					Description = levelDesc
-				};
+				TLevelElement parent = levels[parentId];
+
+				TLevelElement newLevel = CreateLevelElement(
+					name: levelName,
+					guid: GuidHelper.Create(Configuration.Guid_CompatibilityMode ? GuidHelper.LegacyGuids.IsoOidNamespace : LevelTypeGuid, (parent.KeyPath is string parentKeyPath ? parentKeyPath + "::" : "") + levelName, false),
+					description: levelDesc,
+					parentKeyPath: parent.KeyPath
+				);
 				Debug.Assert(id >= 1);
 				levels[id] = newLevel;
-
-				TLevelElement parentTrn = levels[parentId];
-				parentTrn.Items.Add(newLevel);
+				parent.Items.Add(newLevel);
 				return newLevel;
 			}
 			else
@@ -167,7 +173,7 @@ namespace ExcelParser
 			}
 		}
 
-		protected TLeafElement ReadLeaf(ExcelWorksheet sheet, int row)
+		protected TLeafElement ReadLeaf(ExcelWorksheet sheet, int row, string parentKeyPath)
 		{
 			string leafName = sheet.Cells[row, Configuration.DataNameColumn].Value?.ToString().Trim();
 			if (string.IsNullOrEmpty(leafName))
@@ -176,7 +182,7 @@ namespace ExcelParser
 			{
 				Name = leafName,
 				Description = sheet.Cells[row, Configuration.DataDescriptionColumn].Value?.ToString().Trim(),
-				Guid = GuidHelper.Create(Configuration.Guid_CompatibilityMode ? GuidHelper.LegacyGuids.DnsNamespace : LeafTypeGuid, leafName, false).ToString(),
+				Guid = GuidHelper.Create(Configuration.Guid_CompatibilityMode ? GuidHelper.LegacyGuids.DnsNamespace : LeafTypeGuid, (UseParentKeyInLeafGuid ? parentKeyPath + "++" : "") + leafName, false).ToString(),
 				BaseType = sheet.Cells[row, Configuration.BaseTypeColumn].Value?.ToString().Trim(),
 				Type = sheet.Cells[row, Configuration.DataTypeColumn].Value?.ToString().Trim().ToLower(),
 			};

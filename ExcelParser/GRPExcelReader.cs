@@ -21,6 +21,14 @@ namespace ExcelParser
 
 		protected override Guid ObjectTypeGuid => GuidHelper.ObjClass.SubtypeGroup;
 
+		protected override GroupStructure CreateObject(string name, Guid guid, string description) =>
+			new GroupStructure
+			{
+				Name = name,
+				Guid = guid.ToString(),
+				Description = description
+			};
+
 		protected override void BeforeFileList()
 		{
 			base.BeforeFileList();

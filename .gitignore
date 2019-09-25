@@ -5,3 +5,4 @@ obj
 Debug
 Release
 ExcelToGX/Properties/launchSettings.json
+TestExcel/JP/SDT/*.xlsx

@@ -19,6 +19,14 @@ namespace ExcelParser
 	public class LevelElement<IType> : IKBElement
 		where IType : IKBElement
 	{
+		protected LevelElement(string parentKeyPath)
+		{
+			ParentKeyPath = parentKeyPath;
+		}
+
+		private string ParentKeyPath { get; }
+		public string KeyPath => (ParentKeyPath is string parentKeyPath ? parentKeyPath + "::" : "") + Name;
+
 		public string Name { get; set; }
 		public string Description { get; set; }
 		public string Guid { get; set; }
@@ -29,6 +37,10 @@ namespace ExcelParser
 
 	public class TransactionLevel : LevelElement<ITransactionElement>, ITransactionElement
 	{
+		public TransactionLevel(string parentKeyPath)
+			: base(parentKeyPath)
+		{
+		}
 	}
 
 	public class DataTypeElement : IKBElement
@@ -98,6 +110,11 @@ namespace ExcelParser
 
 	public class SDTLevel : LevelElement<ISDTElement>, ISDTElement
 	{
+		public SDTLevel(string parentKeyPath)
+			: base(parentKeyPath)
+		{
+		}
+
 		public bool IsCollection { get; set; }
 		public string CollectionItemName { get; set; }
 		public bool IsItem => false;
@@ -115,5 +132,9 @@ namespace ExcelParser
 
 	public class GroupStructure : LevelElement<GroupAttribute>, IKBElement
 	{
+		public GroupStructure()
+			: base(null)
+		{
+		}
 	}
 }

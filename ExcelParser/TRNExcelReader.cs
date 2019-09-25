@@ -42,8 +42,17 @@ namespace ExcelParser
 		protected override Guid LevelTypeGuid => GuidHelper.ObjClass.TransactionLevel;
 
 		protected override Guid LeafTypeGuid => GuidHelper.ObjClass.Attribute;
+		protected override bool UseParentKeyInLeafGuid => false;
 
 		protected override Guid ObjectTypeGuid => GuidHelper.ObjClass.Transaction;
+
+		protected override TransactionLevel CreateLevelElement(string name, Guid guid, string description, string parentKeyPath) =>
+			new TransactionLevel(parentKeyPath)
+			{
+				Name = name,
+				Guid = guid.ToString(),
+				Description = description
+			};
 
 		protected override void ReadLevelProperties(TransactionLevel level, ExcelWorksheet sheet, int row)
 		{

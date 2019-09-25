@@ -42,7 +42,15 @@ namespace ExcelParser
 
         protected override Guid ObjectTypeGuid => GuidHelper.ObjClass.SDT;
 
-        protected override void ReadLevelProperties(SDTLevel level, ExcelWorksheet sheet, int row)
+		protected override SDTLevel CreateLevelElement(string name, Guid guid, string description, string parentKeyPath) =>
+			new SDTLevel(parentKeyPath)
+			{
+				Name = name,
+				Guid = guid.ToString(),
+				Description = description
+			};
+
+		protected override void ReadLevelProperties(SDTLevel level, ExcelWorksheet sheet, int row)
         {
             ReadIsCollection(level, sheet, row);
         }

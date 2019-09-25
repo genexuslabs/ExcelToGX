@@ -1,6 +1,7 @@
 ﻿using ExcelParser;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace TestExcel
@@ -51,8 +52,29 @@ namespace TestExcel
             reader.Configuration.CollectionItemNameColumn = 12;
         }
 
-        private string GetFilePath(string fileName) =>
-            Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), fileName);
+		private void ConfigJPFolder(SDTExcelReader reader)
+		{
+			ConfigJP(reader);
+			reader.Configuration.DataStartRow = 7;
+			reader.Configuration.DataStartColumn = 7;
+			reader.Configuration.ObjectNameColumn = 7;
+			reader.Configuration.ObjectDescColumn = 9;
+
+			reader.Configuration.ItemIsCollectionColumn = 3;
+			reader.Configuration.CollectionIdentifierKeyword = "○";
+			reader.Configuration.LevelCheckColumn = 4;
+			reader.Configuration.LevelIdentifierKeyword = "○";
+			reader.Configuration.LevelParentIdColumn = 5;
+
+			reader.Configuration.DataNameColumn = 7;
+			reader.Configuration.CollectionItemNameColumn = 8;
+			reader.Configuration.DataTypeColumn = 9;
+			reader.Configuration.DataLengthColumn = 10;
+			reader.Configuration.BaseTypeColumn = 13;
+		}
+
+        private string GetAbsolutePathToTest(string relativePath) =>
+            Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), relativePath);
 
 
         [TestMethod]
@@ -61,8 +83,8 @@ namespace TestExcel
             SDTExcelReader reader = new SDTExcelReader();
             Config(reader);
             reader.Configuration.DefinitionSheetName = "SDT Definition";
-            reader.ReadExcel(new string[] { GetFilePath("SDT_Test.xlsx") }
-                , GetFilePath("sdts.xml"), false);
+            reader.ReadExcel(new string[] { GetAbsolutePathToTest("SDT_Test.xlsx") }
+                , GetAbsolutePathToTest("sdts.xml"), false);
         }
 
         [TestMethod]
@@ -71,8 +93,8 @@ namespace TestExcel
             SDTExcelReader reader = new SDTExcelReader();
             Config(reader);
             reader.Configuration.DefinitionSheetName = "SDT Definition";
-            reader.ReadExcel(new string[] { GetFilePath("SDT_Test_LVL.xlsx") }
-                , GetFilePath("sdts_col.xml"), false);
+            reader.ReadExcel(new string[] { GetAbsolutePathToTest("SDT_Test_LVL.xlsx") }
+                , GetAbsolutePathToTest("sdts_col.xml"), false);
         }
 
         [TestMethod]
@@ -81,11 +103,21 @@ namespace TestExcel
             SDTExcelReader reader = new SDTExcelReader();
             ConfigJP(reader);
             reader.Configuration.DefinitionSheetName = "定義シート";
-            reader.ReadExcel(new string[] { GetFilePath("SDT_Test_JP.xlsx") }
-                , GetFilePath("sdts_jp.xml"), false);
+            reader.ReadExcel(new string[] { GetAbsolutePathToTest("SDT_Test_JP.xlsx") }
+                , GetAbsolutePathToTest("sdts_jp.xml"), false);
         }
 
-        [TestMethod]
+		[TestMethod]
+		public void TestReadJPFolder()
+		{
+			SDTExcelReader reader = new SDTExcelReader();
+			ConfigJPFolder(reader);
+			reader.Configuration.DefinitionSheetName = "SDT定義書";
+			reader.ReadExcel(Directory.GetFiles(GetAbsolutePathToTest(Path.Combine("JP", "SDT")), "*.xlsx")
+				, GetAbsolutePathToTest(Path.Combine("JP", "SDT", "sdts_jp_folder.xml")), false); ;
+		}
+
+		[TestMethod]
         public void Test4()
         {
             SDTExcelReader reader = new SDTExcelReader();
@@ -108,8 +140,8 @@ namespace TestExcel
             reader.Configuration.ItemIsCollectionColumn = 10;
             reader.Configuration.CollectionIdentifierKeyword = "Y";
             reader.Configuration.CollectionItemNameColumn = 11;
-            reader.ReadExcel(new string[] { GetFilePath("Test4_JP_SDT1.xlsx"), GetFilePath("Test4_JP_SDT2.xlsx") }
-                , GetFilePath("sdts_jp_4.xml"), false);
+            reader.ReadExcel(new string[] { GetAbsolutePathToTest("Test4_JP_SDT1.xlsx"), GetAbsolutePathToTest("Test4_JP_SDT2.xlsx") }
+                , GetAbsolutePathToTest("sdts_jp_4.xml"), false);
         }
     }
 }

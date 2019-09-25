@@ -110,7 +110,7 @@ namespace GeneXus.Utilities
 
 		private static bool ReadBaseConfiguration<TConfig, TObject>(ExcelReader<TConfig, TObject> reader)
 			where TConfig : ExcelReader.BaseConfiguration, new()
-			where TObject : IKBElement, new()
+			where TObject : IKBElement
 		{
 			if (!CheckConfigFileIsPresent())
 			{
@@ -138,7 +138,7 @@ namespace GeneXus.Utilities
 			where TConfig : DataExcelReader<TConfig, IType, TLeafElement, TLevelElement>.BaseDataConfiguration, new()
 			where IType : IKBElement
 			where TLeafElement : DataTypeElement, IType, new()
-			where TLevelElement : LevelElement<IType>, IType, new()
+			where TLevelElement : LevelElement<IType>, IType
 		{
 			if (!ReadBaseConfiguration(reader))
 				return false;

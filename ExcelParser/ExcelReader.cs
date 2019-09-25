@@ -30,7 +30,7 @@ namespace ExcelParser
 
 	public abstract class ExcelReader<TConfig, TObject> : ExcelReader
 		where TConfig : ExcelReader.BaseConfiguration, new()
-		where TObject : IKBElement, new()
+		where TObject : IKBElement
 	{
 		private string CurrentFileName;
 		private bool ContinueOnErrors;
@@ -38,6 +38,7 @@ namespace ExcelParser
 		protected abstract string TemplateFile { get; }
 		protected abstract string TemplateRender { get; }
 		protected abstract Guid ObjectTypeGuid { get; }
+		protected abstract TObject CreateObject(string name, Guid guid, string description);
 
 		public sealed override void ReadExcel(string[] files, string outputFile, bool continueOnErrors)
 		{
@@ -61,12 +62,12 @@ namespace ExcelParser
 
 					string objDescription = sheet.Cells[Configuration.ObjectDescRow, Configuration.ObjectDescColumn].Value?.ToString();
 					Console.WriteLine($"Processing object with name '{objName}' and description '{objDescription}'");
-					TObject obj = new TObject
-					{
-						Name = objName,
-						Description = objDescription,
-						Guid = GuidHelper.Create(Configuration.Guid_CompatibilityMode ? GuidHelper.LegacyGuids.IsoOidNamespace : ObjectTypeGuid, objName, false).ToString()
-					};
+					TObject obj = CreateObject
+					(
+						name: objName,
+						description: objDescription,
+						guid: GuidHelper.Create(Configuration.Guid_CompatibilityMode ? GuidHelper.LegacyGuids.IsoOidNamespace : ObjectTypeGuid, objName, false)
+					);
 
 					ProcessFile(sheet, obj);
 				}
