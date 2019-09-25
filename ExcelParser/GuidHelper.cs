@@ -73,30 +73,30 @@ namespace Artech.Common.Helpers.Guids
 			/// <summary>
 			/// The namespace for fully-qualified domain names (from RFC 4122, Appendix C).
 			/// </summary>
-			public static readonly Guid DnsNamespace = new Guid("6ba7b810-9dad-11d1-80b4-00c04fd430c8");
+			public static Guid DnsNamespace => new Guid("6ba7b810-9dad-11d1-80b4-00c04fd430c8");
 
 			/// <summary>
 			/// The namespace for URLs (from RFC 4122, Appendix C).
 			/// </summary>
-			public static readonly Guid UrlNamespace = new Guid("6ba7b811-9dad-11d1-80b4-00c04fd430c8");
+			internal static Guid UrlNamespace => new Guid("6ba7b811-9dad-11d1-80b4-00c04fd430c8");
 
 			/// <summary>
 			/// The namespace for ISO OIDs (from RFC 4122, Appendix C).
 			/// </summary>
-			public static readonly Guid IsoOidNamespace = new Guid("6ba7b812-9dad-11d1-80b4-00c04fd430c8");
+			public static Guid IsoOidNamespace => new Guid("6ba7b812-9dad-11d1-80b4-00c04fd430c8");
 		}
 
 
 		public static class ObjClass
 		{
-			public static readonly Guid Attribute = new Guid("CD674C4C-0C4A-4522-83EE-11E3C901F37E");
-			public static readonly Guid Transaction = new Guid("726355E0-FCE5-41F8-B065-4276926FA2DF");
-			public static readonly Guid Domain = new Guid("E0BB99FE-8E40-469B-972A-6B4BEC10EA3C");
-			public static readonly Guid SubtypeGroup = new Guid("5D81915E-03D5-4B7B-8905-E9812A386EB6");
-			public static readonly Guid TransactionLevel = new Guid("F5E4647E-F1B0-4923-AD79-9B5D1D7807FF");
-			public static readonly Guid SDT = new Guid("73653410-E730-4AAC-9B2C-9809612E6A37");
-			public static readonly Guid SDTItem = new Guid("A3A673FB-5084-46A2-AC53-CB31B382E082");
-			public static readonly Guid SDTLevel = new Guid("6040CA53-BF06-4B93-9981-EDE860DBBA61");
+			public static Guid Attribute => LegacyGuids.DnsNamespace;
+			public static Guid Transaction => LegacyGuids.IsoOidNamespace;
+			public static Guid Domain => LegacyGuids.UrlNamespace;
+			public static Guid SubtypeGroup => new Guid("5D81915E-03D5-4B7B-8905-E9812A386EB6");
+			public static Guid TransactionLevel => new Guid("F5E4647E-F1B0-4923-AD79-9B5D1D7807FF");
+			public static Guid SDT => new Guid("73653410-E730-4AAC-9B2C-9809612E6A37");
+			public static Guid SDTItem => new Guid("A3A673FB-5084-46A2-AC53-CB31B382E082");
+			public static Guid SDTLevel => new Guid("6040CA53-BF06-4B93-9981-EDE860DBBA61");
 		}
 
 		// Converts a GUID (expressed as a byte array) to/from network order (MSB-first).

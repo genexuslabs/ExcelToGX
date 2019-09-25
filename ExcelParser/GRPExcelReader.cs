@@ -58,7 +58,7 @@ namespace ExcelParser
 					{
 						Name = subtypeName,
 						Description = sheet.Cells[row, Configuration.DataDescriptionColumn].Value?.ToString().Trim(),
-						Guid = GuidHelper.Create(Configuration.Guid_CompatibilityMode ? GuidHelper.LegacyGuids.DnsNamespace : GuidHelper.ObjClass.Attribute, subtypeName, false).ToString(),
+						Guid = GuidHelper.Create(GuidHelper.ObjClass.Attribute, subtypeName, false).ToString(),
 						Supertype = sheet.Cells[row, Configuration.SupertypeColumn].Value?.ToString().Trim(),
 					};
 					if (Attributes.TryGetValue(subtypeName, out var other) && subtype.ToString() != other.ToString())

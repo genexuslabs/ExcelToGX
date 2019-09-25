@@ -1,12 +1,11 @@
 ﻿using ExcelParser;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 
 namespace TestExcel
 {
-    [TestClass]
+	[TestClass]
     public class StructuredDataTypeTests
     {
         private void Config(SDTExcelReader reader)

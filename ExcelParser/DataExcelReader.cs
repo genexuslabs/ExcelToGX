@@ -77,7 +77,7 @@ namespace ExcelParser
 							DataTypeElement domain = new DataTypeElement
 							{
 								Name = leaf.BaseType,
-								Guid = GuidHelper.Create(Configuration.Guid_CompatibilityMode ? GuidHelper.LegacyGuids.UrlNamespace : GuidHelper.ObjClass.Domain, leaf.BaseType, false).ToString()
+								Guid = GuidHelper.Create(GuidHelper.ObjClass.Domain, leaf.BaseType, false).ToString()
 							};
 							DataTypeManager.SetDataType(leaf.Type, domain);
 							SetLengthAndDecimals(sheet, row, domain);
